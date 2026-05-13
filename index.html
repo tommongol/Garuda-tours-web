@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хангарьд Турс | Khangarid Tour</title>
+<meta name="description" content="Хангарьд Турс - Монголын аяллын компани. Хятад, Монгол чиглэлийн аялалууд.">
+<link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mongolian&family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c8a44e;
+  --gold-light: #e8d48b;
+  --green-dark: #1a3a2a;
+  --green: #2d5a3d;
+  --green-light: #3d7a50;
+  --sky: #87CEEB;
+  --white: #ffffff;
+  --cream: #f5f0e6;
+  --text-dark: #1a1a1a;
+  --text-light: #666;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: var(--text-dark);
+  overflow-x: hidden;
+  background: var(--cream);
+}
+
+/* ===== MONGOLIAN PATTERN ORNAMENT ===== */
+.ornament {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+.ornament-line {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.ornament-symbol {
+  color: var(--gold);
+  font-size: 18px;
+  letter-spacing: 4px;
+}
+
+/* ===== HEADER / NAVBAR ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(26, 58, 42, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  transition: all 0.3s;
+}
+.navbar.scrolled {
+  height: 60px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.nav-logo img {
+  height: 50px;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+.nav-logo:hover img { transform: scale(1.05); }
+.nav-logo-text {
+  color: var(--gold);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.3s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+.lang-switcher {
+  display: flex;
+  gap: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 3px;
+}
+.lang-btn {
+  padding: 5px 12px;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 16px;
+  transition: all 0.3s;
+}
+.lang-btn.active {
+  background: var(--gold);
+  color: var(--green-dark);
+}
+
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px;
+}
+.mobile-toggle span {
+  width: 25px;
+  height: 2px;
+  background: var(--white);
+  transition: all 0.3s;
+}
+
+/* ===== HERO ===== */
+.hero {
+  height: 100vh;
+  min-height: 700px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0a1f15 0%, #1a3a2a 30%, #2d5a3d 60%, #1a3a2a 100%);
+}
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 50%;
+  opacity: 0;
+  animation: float-particle 8s infinite;
+}
+@keyframes float-particle {
+  0% { opacity: 0; transform: translateY(100vh) scale(0); }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-20vh) scale(1.5); }
+}
+
+.hero-mountains {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+}
+.mountain {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  border-style: solid;
+}
+.mountain-1 {
+  left: -5%;
+  border-width: 0 300px 280px 300px;
+  border-color: transparent transparent rgba(45,90,61,0.4) transparent;
+}
+.mountain-2 {
+  left: 20%;
+  border-width: 0 400px 350px 350px;
+  border-color: transparent transparent rgba(45,90,61,0.3) transparent;
+}
+.mountain-3 {
+  right: -10%;
+  border-width: 0 350px 300px 400px;
+  border-color: transparent transparent rgba(45,90,61,0.35) transparent;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 20px;
+}
+.hero-logo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 30px;
+  animation: pulse-glow 3s ease-in-out infinite;
+  border: 3px solid var(--gold);
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 30px rgba(200,164,78,0.3); }
+  50% { box-shadow: 0 0 60px rgba(200,164,78,0.6); }
+}
+
+.hero-title {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: 10px;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.hero-title span {
+  color: var(--gold);
+}
+.hero-subtitle {
+  font-size: clamp(16px, 2.5vw, 24px);
+  color: var(--gold-light);
+  font-weight: 300;
+  margin-bottom: 40px;
+  letter-spacing: 4px;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, var(--gold), #b8943e);
+  color: var(--green-dark);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 50px;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(200,164,78,0.4);
+}
+.hero-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(200,164,78,0.6);
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: bounce 2s infinite;
+}
+.hero-scroll-icon {
+  width: 30px;
+  height: 50px;
+  border: 2px solid var(--gold);
+  border-radius: 15px;
+  position: relative;
+}
+.hero-scroll-icon::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 10px;
+  background: var(--gold);
+  border-radius: 2px;
+  animation: scroll-dot 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+@keyframes scroll-dot {
+  0% { opacity: 1; top: 8px; }
+  100% { opacity: 0; top: 25px; }
+}
+
+/* ===== SECTION STYLES ===== */
+section {
+  padding: 100px 40px;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.section-tag {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 800;
+  color: var(--green-dark);
+  margin-bottom: 15px;
+}
+.section-desc {
+  font-size: 16px;
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* ===== ABOUT ===== */
+#about {
+  background: var(--white);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+.about-image {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-image-inner {
+  font-size: 120px;
+  opacity: 0.3;
+}
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+.stat-item {
+  text-align: center;
+  padding: 20px;
+  background: var(--cream);
+  border-radius: 12px;
+}
+.stat-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--gold);
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 5px;
+}
+
+/* ===== TOURS ===== */
+#tours {
+  background: var(--cream);
+}
+.tour-categories {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.tour-cat-btn {
+  padding: 10px 24px;
+  border: 2px solid var(--green);
+  background: transparent;
+  color: var(--green-dark);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.tour-cat-btn.active,
+.tour-cat-btn:hover {
+  background: var(--green);
+  color: var(--white);
+}
+.tours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.tour-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: all 0.4s;
+  cursor: pointer;
+  position: relative;
+}
+.tour-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+.tour-card-image {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+.tour-card-image .tour-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  color: rgba(255,255,255,0.5);
+  transition: transform 0.5s;
+}
+.tour-card:hover .tour-bg { transform: scale(1.1); }
+
+.tour-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--gold);
+  color: var(--green-dark);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.tour-card-body {
+  padding: 25px;
+}
+.tour-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green-dark);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.tour-card-route {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tour-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+.tour-duration {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-light);
+}
+.tour-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--gold);
+}
+.tour-price small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-light);
+}
+
+/* ===== TOUR DETAIL MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s;
+}
+.modal-overlay.active { display: flex; }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal {
+  background: var(--white);
+  border-radius: 20px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.4s;
+}
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-close {
+  position: sticky;
+  top: 15px;
+  float: right;
+  margin-right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.1);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+.modal-close:hover { background: rgba(0,0,0,0.2); }
+.modal-header {
+  padding: 40px 40px 20px;
+}
+.modal-header h2 {
+  font-size: 28px;
+  color: var(--green-dark);
+  margin-bottom: 8px;
+}
+.modal-header .modal-meta {
+  display: flex;
+  gap: 20px;
+  color: var(--text-light);
+  font-size: 14px;
+}
+.modal-body {
+  padding: 0 40px 40px;
+}
+.itinerary-day {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+.itinerary-day:last-child { border-bottom: none; }
+.day-number {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+}
+.day-content h4 {
+  font-size: 16px;
+  color: var(--green-dark);
+  margin-bottom: 6px;
+}
+.day-content p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+.day-meals {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.meal-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  background: var(--cream);
+  border-radius: 10px;
+  color: var(--text-light);
+}
+.modal-schedule {
+  margin-top: 20px;
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 20px;
+}
+.modal-schedule h3 {
+  font-size: 16px;
+  color: var(--green-dark);
+  margin-bottom: 12px;
+}
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.schedule-table th {
+  background: var(--green);
+  color: var(--white);
+  padding: 8px 12px;
+  text-align: left;
+}
+.schedule-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+}
+.modal-price-box {
+  margin-top: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  border-radius: 12px;
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-price-box .price-info h3 { margin-bottom: 4px; }
+.modal-price-box .price-amount {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--gold);
+}
+.modal-cta {
+  padding: 14px 36px;
+  background: var(--gold);
+  color: var(--green-dark);
+  border: none;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.modal-cta:hover { transform: scale(1.05); }
+
+/* ===== WHY US ===== */
+#why {
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  color: var(--white);
+}
+#why .section-title { color: var(--white); }
+#why .section-desc { color: rgba(255,255,255,0.7); }
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.why-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 35px;
+  text-align: center;
+  transition: all 0.3s;
+  backdrop-filter: blur(5px);
+}
+.why-card:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-5px);
+}
+.why-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+.why-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--gold);
+}
+.why-card p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+}
+
+/* ===== CONTACT ===== */
+#contact {
+  background: var(--white);
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.contact-info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: var(--cream);
+  border-radius: 12px;
+  margin-bottom: 15px;
+  transition: transform 0.3s;
+}
+.contact-info-card:hover { transform: translateX(5px); }
+.contact-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: var(--green);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.contact-info-card h4 {
+  font-size: 14px;
+  color: var(--green-dark);
+  margin-bottom: 4px;
+}
+.contact-info-card p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+  background: var(--cream);
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.contact-form textarea { resize: vertical; min-height: 120px; }
+.form-submit {
+  padding: 16px;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(45,90,61,0.4);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--green-dark);
+  color: rgba(255,255,255,0.7);
+  padding: 60px 40px 30px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.footer-brand img {
+  height: 60px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.footer-brand p {
+  font-size: 14px;
+  line-height: 1.8;
+}
+.footer-col h4 {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+.footer-col a {
+  display: block;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 13px;
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
+.footer-col a:hover { color: var(--gold); }
+.footer-bottom {
+  text-align: center;
+  padding-top: 30px;
+  font-size: 13px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 968px) {
+  .navbar { padding: 0 20px; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: var(--green-dark);
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+  }
+  .nav-links.open { display: flex; }
+  .mobile-toggle { display: flex; }
+  section { padding: 60px 20px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+  .tours-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .modal { border-radius: 16px 16px 0 0; max-height: 90vh; }
+  .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
+  .modal-price-box { flex-direction: column; gap: 15px; text-align: center; }
+}
+@media (max-width: 600px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .about-stats { grid-template-columns: 1fr; }
+  .hero-logo { width: 130px; height: 130px; }
+}
+
+/* ===== GRADIENT BACKGROUNDS FOR TOUR CARDS ===== */
+.bg-china-1 { background: linear-gradient(135deg, #2c3e50, #3498db); }
+.bg-china-2 { background: linear-gradient(135deg, #8e44ad, #3498db); }
+.bg-china-3 { background: linear-gradient(135deg, #e74c3c, #f39c12); }
+.bg-china-4 { background: linear-gradient(135deg, #16a085, #f39c12); }
+.bg-china-5 { background: linear-gradient(135deg, #2c3e50, #27ae60); }
+.bg-china-6 { background: linear-gradient(135deg, #d35400, #e74c3c); }
+.bg-china-7 { background: linear-gradient(135deg, #2980b9, #2c3e50); }
+.bg-china-8 { background: linear-gradient(135deg, #8e44ad, #c0392b); }
+.bg-mongol-1 { background: linear-gradient(135deg, #1a5f2a, #87CEEB); }
+.bg-mongol-2 { background: linear-gradient(135deg, #3a3a00, #556b2f); }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="assets/logo.jpg" alt="Khangarid Tour Logo">
+    <span class="nav-logo-text">KHANGARID TOUR</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" data-i18n="nav_about">Бидний тухай</a></li>
+    <li><a href="#tours" data-i18n="nav_tours">Аялалууд</a></li>
+    <li><a href="#why" data-i18n="nav_why">Яагаад бид</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">Холбоо барих</a></li>
+    <li>
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('mn')">MN</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('cn')">中文</button>
+      </div>
+    </li>
+  </ul>
+  <div class="mobile-toggle" id="mobileToggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-mountains">
+    <div class="mountain mountain-1"></div>
+    <div class="mountain mountain-2"></div>
+    <div class="mountain mountain-3"></div>
+  </div>
+  <div class="hero-content">
+    <img src="assets/logo.jpg" alt="Khangarid Tour" class="hero-logo">
+    <h1 class="hero-title" data-i18n="hero_title">ХАНГАРЬД <span>ТУРС</span></h1>
+    <p class="hero-subtitle" data-i18n="hero_subtitle">АЯЛАЛ ЖУУЛЧЛАЛЫН КОМПАНИ</p>
+    <a href="#tours" class="hero-cta" data-i18n="hero_cta">&#9992; Аялалуудыг үзэх</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-icon"></div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="about_tag">БИДНИЙ ТУХАЙ</span>
+    <h2 class="section-title" data-i18n="about_title">Монгол нүүдэлчдийн замаар</h2>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <span class="ornament-symbol">&#9830; &#9830; &#9830;</span>
+      <div class="ornament-line"></div>
+    </div>
+  </div>
+  <div class="about-grid">
+    <div class="about-image reveal">
+      <div class="about-image-inner">&#127968;</div>
+    </div>
+    <div class="reveal">
+      <p style="font-size:16px;line-height:1.9;color:var(--text-light);margin-bottom:20px" data-i18n="about_p1">
+        Хангарьд Турс нь Монголын аялал жуулчлалын салбарт мэргэшсэн компани бөгөөд БНХАУ (Хятад), Монгол чиглэлийн аялалын үйлчилгээ үзүүлдэг. Бид таны аялалыг аюулгүй, тав тухтай, мартагдашгүй болгоно.
+      </p>
+      <p style="font-size:16px;line-height:1.9;color:var(--text-light)" data-i18n="about_p2">
+        Бидний баг нь мэргэжлийн хөтчүүд, туршлагатай жолоочид, нутгийн мэдлэгтэй зохицуулагчдаас бүрддэг. Хятад болон Монголын хамгийн сонирхолтой газруудаар аялж, соёл, түүх, байгалийн үзэсгэлэнг нээж мэдрэх боломжийг бид танд олгоно.
+      </p>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-number">10+</div>
+          <div class="stat-label" data-i18n="stat_tours">Аялалын хөтөлбөр</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">2</div>
+          <div class="stat-label" data-i18n="stat_countries">Улс орон</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3</div>
+          <div class="stat-label" data-i18n="stat_languages">Хэлний үйлчилгээ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOURS ===== -->
+<section id="tours">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="tours_tag">АЯЛАЛУУД</span>
+    <h2 class="section-title" data-i18n="tours_title">Аялалын хөтөлбөрүүд</h2>
+    <p class="section-desc" data-i18n="tours_desc">Хятад болон Монгол чиглэлийн олон төрлийн аялалаас сонгоорой</p>
+  </div>
+  <div class="tour-categories reveal">
+    <button class="tour-cat-btn active" onclick="filterTours('all')" data-i18n="cat_all">Бүгд</button>
+    <button class="tour-cat-btn" onclick="filterTours('china')" data-i18n="cat_china">БНХАУ чиглэл</button>
+    <button class="tour-cat-btn" onclick="filterTours('mongolia')" data-i18n="cat_mongolia">Монгол чиглэл</button>
+  </div>
+  <div class="tours-grid" id="toursGrid">
+  </div>
+</section>
+
+<!-- ===== WHY US ===== -->
+<section id="why">
+  <div class="section-header reveal">
+    <span class="section-tag" style="color:var(--gold-light)" data-i18n="why_tag">ЯАГААД БИД</span>
+    <h2 class="section-title" data-i18n="why_title">Хангарьд Турс-ыг сонгох шалтгаан</h2>
+    <p class="section-desc" data-i18n="why_desc">Таны аялал бидний хариуцлага</p>
+  </div>
+  <div class="why-grid reveal">
+    <div class="why-card">
+      <div class="why-icon">&#128274;</div>
+      <h3 data-i18n="why1_title">Аюулгүй аялал</h3>
+      <p data-i18n="why1_desc">Мэргэжлийн жолооч, лицензтэй автобус, аяллын даатгал бүхий найдвартай үйлчилгээ</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">&#127759;</div>
+      <h3 data-i18n="why2_title">Мэргэжлийн хөтөч</h3>
+      <p data-i18n="why2_desc">Монгол, Хятад, Англи хэлтэй туршлагатай хөтөчид таныг хүлээж байна</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">&#127969;</div>
+      <h3 data-i18n="why3_title">Тав тухтай байр</h3>
+      <p data-i18n="why3_desc">Халуун рашаан, 4-5 одтой зочид буудлуудад байрлах тансаг зэрэглэлийн үйлчилгээ</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">&#128176;</div>
+      <h3 data-i18n="why4_title">Хямд үнэ</h3>
+      <p data-i18n="why4_desc">Хоол, байр, тээвэр бүгдийг багтаасан ил тод, хямд үнийн санал</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="contact_tag">ХОЛБОО БАРИХ</span>
+    <h2 class="section-title" data-i18n="contact_title">Бидэнтэй холбогдох</h2>
+    <p class="section-desc" data-i18n="contact_desc">Аяллын талаар мэдээлэл авах, захиалга өгөхийг хүсвэл бидэнтэй холбогдоорой</p>
+  </div>
+  <div class="contact-grid reveal">
+    <div>
+      <div class="contact-info-card">
+        <div class="contact-icon">&#128205;</div>
+        <div>
+          <h4 data-i18n="contact_address_label">Хаяг</h4>
+          <p data-i18n="contact_address">Монгол улс, Улаанбаатар хот, Хан-Уул дүүрэг, SEVEN STAR residence & shopping mall, 1 давхар</p>
+        </div>
+      </div>
+      <div class="contact-info-card">
+        <div class="contact-icon">&#128222;</div>
+        <div>
+          <h4 data-i18n="contact_phone_label">Утас</h4>
+          <p>9596-1785</p>
+        </div>
+      </div>
+      <div class="contact-info-card">
+        <div class="contact-icon">&#127760;</div>
+        <div>
+          <h4 data-i18n="contact_web_label">Вэбсайт</h4>
+          <p>www.garuda.tours</p>
+        </div>
+      </div>
+      <div class="contact-info-card">
+        <div class="contact-icon">&#128337;</div>
+        <div>
+          <h4 data-i18n="contact_hours_label">Ажлын цаг</h4>
+          <p data-i18n="contact_hours">Даваа - Баасан: 09:00 - 18:00</p>
+        </div>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <input type="text" data-i18n-placeholder="form_name" placeholder="Нэр" required>
+        <input type="tel" data-i18n-placeholder="form_phone" placeholder="Утас" required>
+      </div>
+      <input type="email" data-i18n-placeholder="form_email" placeholder="Имэйл">
+      <textarea data-i18n-placeholder="form_message" placeholder="Мессеж бичих..."></textarea>
+      <button type="submit" class="form-submit" data-i18n="form_submit">Илгээх</button>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/logo.jpg" alt="Khangarid Tour">
+      <p data-i18n="footer_desc">Хангарьд Турс - Монголын аялал жуулчлалын мэргэшсэн компани. БНХАУ, Монгол чиглэлийн аялалын үйлчилгээ.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer_links">ХОЛБООСУУД</h4>
+      <a href="#about" data-i18n="nav_about">Бидний тухай</a>
+      <a href="#tours" data-i18n="nav_tours">Аялалууд</a>
+      <a href="#why" data-i18n="nav_why">Яагаад бид</a>
+      <a href="#contact" data-i18n="nav_contact">Холбоо барих</a>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer_tours">АЯЛАЛУУД</h4>
+      <a href="#tours" data-i18n="cat_china">БНХАУ чиглэл</a>
+      <a href="#tours" data-i18n="cat_mongolia">Монгол чиглэл</a>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="contact_tag">ХОЛБОО БАРИХ</h4>
+      <a href="tel:95961785">&#128222; 9596-1785</a>
+      <a>&#128205; Хан-Уул дүүрэг, SEVEN STAR</a>
+      <a>&#127760; www.garuda.tours</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Хангарьд Турс | Khangarid Tour. <span data-i18n="footer_rights">Бүх эрх хуулиар хамгаалагдсан.</span></p>
+  </div>
+</footer>
+
+<!-- ===== TOUR DETAIL MODAL ===== -->
+<div class="modal-overlay" id="tourModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    <div class="modal-header" id="modalHeader"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ===== TRANSLATIONS =====
+const i18n = {
+  mn: {
+    nav_about: "Бидний тухай",
+    nav_tours: "Аялалууд",
+    nav_why: "Яагаад бид",
+    nav_contact: "Холбоо барих",
+    hero_title: "ХАНГАРЬД <span>ТУРС</span>",
+    hero_subtitle: "АЯЛАЛ ЖУУЛЧЛАЛЫН КОМПАНИ",
+    hero_cta: "&#9992; Аялалуудыг үзэх",
+    about_tag: "БИДНИЙ ТУХАЙ",
+    about_title: "Монгол нүүдэлчдийн замаар",
+    about_p1: "Хангарьд Турс нь Монголын аялал жуулчлалын салбарт мэргэшсэн компани бөгөөд БНХАУ (Хятад), Монгол чиглэлийн аялалын үйлчилгээ үзүүлдэг. Бид таны аялалыг аюулгүй, тав тухтай, мартагдашгүй болгоно.",
+    about_p2: "Бидний баг нь мэргэжлийн хөтчүүд, туршлагатай жолоочид, нутгийн мэдлэгтэй зохицуулагчдаас бүрддэг. Хятад болон Монголын хамгийн сонирхолтой газруудаар аялж, соёл, түүх, байгалийн үзэсгэлэнг нээж мэдрэх боломжийг бид танд олгоно.",
+    stat_tours: "Аялалын хөтөлбөр",
+    stat_countries: "Улс орон",
+    stat_languages: "Хэлний үйлчилгээ",
+    tours_tag: "АЯЛАЛУУД",
+    tours_title: "Аялалын хөтөлбөрүүд",
+    tours_desc: "Хятад болон Монгол чиглэлийн олон төрлийн аялалаас сонгоорой",
+    cat_all: "Бүгд",
+    cat_china: "БНХАУ чиглэл",
+    cat_mongolia: "Монгол чиглэл",
+    why_tag: "ЯАГААД БИД",
+    why_title: "Хангарьд Турс-ыг сонгох шалтгаан",
+    why_desc: "Таны аялал бидний хариуцлага",
+    why1_title: "Аюулгүй аялал",
+    why1_desc: "Мэргэжлийн жолооч, лицензтэй автобус, аяллын даатгал бүхий найдвартай үйлчилгээ",
+    why2_title: "Мэргэжлийн хөтөч",
+    why2_desc: "Монгол, Хятад, Англи хэлтэй туршлагатай хөтөчид таныг хүлээж байна",
+    why3_title: "Тав тухтай байр",
+    why3_desc: "Халуун рашаан, 4-5 одтой зочид буудлуудад байрлах тансаг зэрэглэлийн үйлчилгээ",
+    why4_title: "Хямд үнэ",
+    why4_desc: "Хоол, байр, тээвэр бүгдийг багтаасан ил тод, хямд үнийн санал",
+    contact_tag: "ХОЛБОО БАРИХ",
+    contact_title: "Бидэнтэй холбогдох",
+    contact_desc: "Аяллын талаар мэдээлэл авах, захиалга өгөхийг хүсвэл бидэнтэй холбогдоорой",
+    contact_address_label: "Хаяг",
+    contact_address: "Монгол улс, Улаанбаатар хот, Хан-Уул дүүрэг, SEVEN STAR residence & shopping mall, 1 давхар",
+    contact_phone_label: "Утас",
+    contact_web_label: "Вэбсайт",
+    contact_hours_label: "Ажлын цаг",
+    contact_hours: "Даваа - Баасан: 09:00 - 18:00",
+    form_name: "Нэр",
+    form_phone: "Утас",
+    form_email: "Имэйл",
+    form_message: "Мессеж бичих...",
+    form_submit: "Илгээх",
+    footer_desc: "Хангарьд Турс - Монголын аялал жуулчлалын мэргэшсэн компани. БНХАУ, Монгол чиглэлийн аялалын үйлчилгээ.",
+    footer_links: "ХОЛБООСУУД",
+    footer_tours: "АЯЛАЛУУД",
+    footer_rights: "Бүх эрх хуулиар хамгаалагдсан.",
+    days: "хоног",
+    nights: "шөнө",
+    from: "эхлэх үнэ",
+    adult: "Том хүн",
+    child: "Хүүхэд (3-11 нас)",
+    schedule: "Аялалын хуваарь",
+    month: "Сар",
+    dates: "Өдрүүд",
+    book_now: "Захиалах",
+    itinerary: "Аялалын хөтөлбөр",
+    meals: "Хоол",
+    breakfast: "Өглөөний цай",
+    lunch: "Өдрийн хоол",
+    dinner: "Оройн хоол",
+    accommodation: "Байр",
+    included: "Үнэд багтсан",
+    not_included: "Үнэд багтаагүй",
+    alert_sent: "Таны мессеж амжилттай илгээгдлээ!",
+  },
+  en: {
+    nav_about: "About Us",
+    nav_tours: "Tours",
+    nav_why: "Why Us",
+    nav_contact: "Contact",
+    hero_title: "KHANGARID <span>TOUR</span>",
+    hero_subtitle: "TRAVEL & TOURISM COMPANY",
+    hero_cta: "&#9992; Explore Tours",
+    about_tag: "ABOUT US",
+    about_title: "Following the Path of Nomads",
+    about_p1: "Khangarid Tour is a professional travel company specializing in tours to China and Mongolia. We make your journey safe, comfortable, and unforgettable.",
+    about_p2: "Our team consists of professional guides, experienced drivers, and local coordinators. We offer you the opportunity to explore the most fascinating places in China and Mongolia, discovering culture, history, and natural beauty.",
+    stat_tours: "Tour Programs",
+    stat_countries: "Countries",
+    stat_languages: "Language Services",
+    tours_tag: "TOURS",
+    tours_title: "Tour Programs",
+    tours_desc: "Choose from a variety of tours to China and Mongolia",
+    cat_all: "All",
+    cat_china: "China Tours",
+    cat_mongolia: "Mongolia Tours",
+    why_tag: "WHY US",
+    why_title: "Why Choose Khangarid Tour",
+    why_desc: "Your journey is our responsibility",
+    why1_title: "Safe Travel",
+    why1_desc: "Professional drivers, licensed buses, and travel insurance for reliable service",
+    why2_title: "Expert Guides",
+    why2_desc: "Experienced guides fluent in Mongolian, Chinese, and English",
+    why3_title: "Comfortable Stays",
+    why3_desc: "4-5 star hotels with hot springs and premium resort facilities",
+    why4_title: "Best Prices",
+    why4_desc: "Transparent, affordable packages including meals, accommodation, and transport",
+    contact_tag: "CONTACT",
+    contact_title: "Get in Touch",
+    contact_desc: "Contact us for tour information and bookings",
+    contact_address_label: "Address",
+    contact_address: "Mongolia, Ulaanbaatar, Khan-Uul District, SEVEN STAR Residence & Shopping Mall, 1st Floor",
+    contact_phone_label: "Phone",
+    contact_web_label: "Website",
+    contact_hours_label: "Working Hours",
+    contact_hours: "Monday - Friday: 09:00 - 18:00",
+    form_name: "Name",
+    form_phone: "Phone",
+    form_email: "Email",
+    form_message: "Write your message...",
+    form_submit: "Send",
+    footer_desc: "Khangarid Tour - Professional travel company in Mongolia. Tours to China and Mongolia.",
+    footer_links: "LINKS",
+    footer_tours: "TOURS",
+    footer_rights: "All rights reserved.",
+    days: "days",
+    nights: "nights",
+    from: "from",
+    adult: "Adult",
+    child: "Child (3-11 yrs)",
+    schedule: "Tour Schedule",
+    month: "Month",
+    dates: "Dates",
+    book_now: "Book Now",
+    itinerary: "Itinerary",
+    meals: "Meals",
+    breakfast: "Breakfast",
+    lunch: "Lunch",
+    dinner: "Dinner",
+    accommodation: "Hotel",
+    included: "Included",
+    not_included: "Not Included",
+    alert_sent: "Your message has been sent successfully!",
+  },
+  cn: {
+    nav_about: "关于我们",
+    nav_tours: "旅游线路",
+    nav_why: "为什么选择我们",
+    nav_contact: "联系我们",
+    hero_title: "杭嘎日德 <span>旅行社</span>",
+    hero_subtitle: "旅游服务公司",
+    hero_cta: "&#9992; 查看旅游线路",
+    about_tag: "关于我们",
+    about_title: "沿着游牧民族的足迹",
+    about_p1: "杭嘎日德旅行社是一家专业从事中国和蒙古旅游的公司。我们让您的旅程安全、舒适、难忘。",
+    about_p2: "我们的团队由专业导游、经验丰富的司机和当地协调员组成。我们为您提供探索中国和蒙古最迷人景点的机会，发现文化、历史和自然之美。",
+    stat_tours: "旅游线路",
+    stat_countries: "国家",
+    stat_languages: "语言服务",
+    tours_tag: "旅游线路",
+    tours_title: "旅游行程",
+    tours_desc: "从多种中国和蒙古旅游线路中选择",
+    cat_all: "全部",
+    cat_china: "中国线路",
+    cat_mongolia: "蒙古线路",
+    why_tag: "为什么选择我们",
+    why_title: "选择杭嘎日德旅行社的理由",
+    why_desc: "您的旅程是我们的责任",
+    why1_title: "安全旅行",
+    why1_desc: "专业司机、持牌巴士和旅行保险，提供可靠服务",
+    why2_title: "专业导游",
+    why2_desc: "精通蒙语、中文和英语的经验丰富的导游",
+    why3_title: "舒适住宿",
+    why3_desc: "4-5星级酒店，配有温泉和高级度假设施",
+    why4_title: "最优价格",
+    why4_desc: "包含餐饮、住宿和交通的透明、实惠套餐",
+    contact_tag: "联系我们",
+    contact_title: "联系方式",
+    contact_desc: "如需旅游信息和预订，请联系我们",
+    contact_address_label: "地址",
+    contact_address: "蒙古国乌兰巴托市汗乌勒区 SEVEN STAR 公寓购物中心1楼",
+    contact_phone_label: "电话",
+    contact_web_label: "网站",
+    contact_hours_label: "工作时间",
+    contact_hours: "周一至周五: 09:00 - 18:00",
+    form_name: "姓名",
+    form_phone: "电话",
+    form_email: "邮箱",
+    form_message: "请输入留言...",
+    form_submit: "发送",
+    footer_desc: "杭嘎日德旅行社 - 蒙古专业旅游公司。中国和蒙古旅游服务。",
+    footer_links: "链接",
+    footer_tours: "旅游线路",
+    footer_rights: "版权所有。",
+    days: "天",
+    nights: "晚",
+    from: "起",
+    adult: "成人",
+    child: "儿童 (3-11岁)",
+    schedule: "出发日期",
+    month: "月份",
+    dates: "日期",
+    book_now: "立即预订",
+    itinerary: "行程安排",
+    meals: "餐食",
+    breakfast: "早餐",
+    lunch: "午餐",
+    dinner: "晚餐",
+    accommodation: "酒店",
+    included: "费用包含",
+    not_included: "费用不含",
+    alert_sent: "您的留言已成功发送！",
+  }
+};
+
+// ===== TOUR DATA =====
+const tours = [
+  {
+    id: 1, cat: "china", bg: "bg-china-1", emoji: "&#127970;",
+    title: { mn: "Жанжакоу - Тяньжин - Бээжин", en: "Zhangjiakou - Tianjin - Beijing", cn: "张家口 - 天津 - 北京" },
+    route: { mn: "Эрээн → Жанжакоу → Тяньжин → Бээжин → Эрээн", en: "Erlian → Zhangjiakou → Tianjin → Beijing → Erlian", cn: "二连浩特 → 张家口 → 天津 → 北京 → 二连浩特" },
+    days: 7, nights: 6,
+    price: "2,180", priceCurrency: "&#165;", childPrice: "1,780",
+    badge: { mn: "Шилдэг", en: "Popular", cn: "热门" },
+    schedule: [
+      { month: { mn: "5 сар", en: "May", cn: "5月" }, dates: "17, 24" },
+      { month: { mn: "6 сар", en: "Jun", cn: "6月" }, dates: "07, 14, 21" },
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "19, 26" },
+      { month: { mn: "8 сар", en: "Aug", cn: "8月" }, dates: "02, 16, 23" },
+      { month: { mn: "9 сар", en: "Sep", cn: "9月" }, dates: "06, 13" },
+      { month: { mn: "10 сар", en: "Oct", cn: "10月" }, dates: "11, 18" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Жанжакоу", en: "Erlian → Zhangjiakou", cn: "二连 → 张家口" }, desc: { mn: "Эрээн-Жанжакоу чиглэлд аяллын автобусаар явна. Амралтын цогцолборт халуун рашаан, саун, бассейнд орж алжаалаа тайлна.", en: "Travel by tour bus to Zhangjiakou. Enjoy hot springs, sauna, and pool at the resort.", cn: "乘车前往张家口温泉，抵达入住休息。" }, meals: ["dinner"] },
+      { route: { mn: "Жанжакоу → Тяньжин", en: "Zhangjiakou → Tianjin", cn: "张家口 → 天津" }, desc: { mn: "Тяньжин хотод хүрээд усан онгоцтой аялалд гарна. Италийн хэв маягийн гудамжаар зочилно.", en: "Arrive in Tianjin for a boat cruise. Visit the Italian-style street.", cn: "抵达天津后游船，参观意大利风情街。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Тяньжин", en: "Tianjin", cn: "天津" }, desc: { mn: "Дэлхийн хамгийн том, өвөрмөц архитектуртай алдартай Номын сангаар зочилно. Номхон далайн эрэг дээр цагийг өнгөрөөнө.", en: "Visit the world-famous library. Spend time at the beach.", cn: "参观图书馆，东疆港沙滩自由活动。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Тяньжин → Бээжин", en: "Tianjin → Beijing", cn: "天津 → 北京" }, desc: { mn: "Бээжин хотод ирж Телевизийн цамхагт зочилно. Шувууний үүрний гадна зураг авахуулна.", en: "Arrive in Beijing, visit TV Tower. Photo at Bird's Nest.", cn: "抵达北京游览电视塔，鸟巢拍照。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Бээжин", en: "Beijing", cn: "北京" }, desc: { mn: "Чөлөөт өдөр. Universal Studio (өөрийн зардлаар) эсвэл зах худалдааны төвөөр зугаацна.", en: "Free day. Optional Universal Studios or shopping.", cn: "自由活动一天（环球影城自费）。" }, meals: ["breakfast"] },
+      { route: { mn: "Бээжин → Эрээн", en: "Beijing → Erlian", cn: "北京 → 二连浩特" }, desc: { mn: "Цагаан хэрэм үзээд Эрээн хот руу буцна.", en: "Visit the Great Wall, return to Erlian.", cn: "游览长城后返回二连浩特。" }, meals: ["breakfast"] },
+      { route: { mn: "Эрээн → Замын-Үүд", en: "Erlian → Zamiin-Uud", cn: "二连浩特 → 扎门乌德" }, desc: { mn: "Хил гаалиар нэвтрэн Монгол руу буцна.", en: "Cross the border and return to Mongolia.", cn: "办理出境手续返回乌兰巴托。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 2, cat: "china", bg: "bg-china-2", emoji: "&#127956;",
+    title: { mn: "Жинин - Датунг - Линхү - Хөх хот", en: "Jining - Datong - Linhu - Hohhot", cn: "集宁 - 大同 - 林湖 - 呼和浩特" },
+    route: { mn: "Эрээн → Жинин → Датунг → Линхү → Хөх хот → Эрээн", en: "Erlian → Jining → Datong → Linhu → Hohhot → Erlian", cn: "二连 → 集宁 → 大同 → 林湖 → 呼和浩特" },
+    days: 5, nights: 4,
+    price: "1,580", priceCurrency: "&#165;", childPrice: "1,180",
+    badge: { mn: "5 өдөр", en: "5 days", cn: "5天" },
+    schedule: [
+      { month: { mn: "5 сар", en: "May", cn: "5月" }, dates: "08, 15, 22" },
+      { month: { mn: "6 сар", en: "Jun", cn: "6月" }, dates: "05, 12, 26" },
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "03, 17, 24" },
+      { month: { mn: "8 сар", en: "Aug", cn: "8月" }, dates: "07, 21, 28" },
+      { month: { mn: "9 сар", en: "Sep", cn: "9月" }, dates: "04, 11, 18" },
+      { month: { mn: "10 сар", en: "Oct", cn: "10月" }, dates: "09, 16, 23" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Жинин", en: "Erlian → Jining", cn: "二连 → 集宁" }, desc: { mn: "5 одтой Water World тансаг рашаан амралтын цогцолборт байрлана.", en: "Stay at 5-star Water World hot spring resort.", cn: "入境后前往集宁永亮温泉休息。" }, meals: ["dinner"] },
+      { route: { mn: "Жинин → Датунг", en: "Jining → Datong", cn: "集宁 → 大同" }, desc: { mn: "Датунг хотын Фантэ парк-д зугаацна.", en: "Visit Fantawild amusement park in Datong.", cn: "前往大同方特乐园。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Датунг → Линхү → Хөх хот", en: "Datong → Linhu → Hohhot", cn: "大同 → 林湖 → 呼和浩特" }, desc: { mn: "Мини Аватаар, шилэн гүүр, амьтны хүрээлэн, усан парк үзнэ.", en: "Visit Mini Avatar, glass bridge, zoo, and water park.", cn: "参观动物园、玻璃桥、水世界。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Хөх хот", en: "Hohhot", cn: "呼和浩特" }, desc: { mn: "Шинжлэх ухаан, технологийн музей. Чөлөөт цаг - shopping.", en: "Science & Technology Museum. Free time for shopping.", cn: "参观科技馆，自由购物。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Хөх хот → Эрээн", en: "Hohhot → Erlian", cn: "呼和浩特 → 二连" }, desc: { mn: "Эрээн хот руу буцна. Хил нэвтрэнэ.", en: "Return to Erlian and cross the border.", cn: "返回二连浩特出境。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 3, cat: "china", bg: "bg-china-3", emoji: "&#127749;",
+    title: { mn: "Жинин - Мини Аватаар - Хөх хот", en: "Jining - Mini Avatar - Hohhot", cn: "集宁 - 林湖 - 呼市" },
+    route: { mn: "Эрээн → Жинин → Мини Аватаар → Хөх хот → Эрээн", en: "Erlian → Jining → Mini Avatar → Hohhot → Erlian", cn: "二连 → 集宁 → 林湖 → 呼市" },
+    days: 5, nights: 4,
+    price: "1,250", priceCurrency: "&#165;", childPrice: "980",
+    badge: { mn: "Хямд", en: "Value", cn: "超值" },
+    schedule: [
+      { month: { mn: "5 сар", en: "May", cn: "5月" }, dates: "08, 15, 22" },
+      { month: { mn: "6 сар", en: "Jun", cn: "6月" }, dates: "05, 12, 26" },
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "03, 18, 25" },
+      { month: { mn: "8 сар", en: "Aug", cn: "8月" }, dates: "07, 14, 21" },
+      { month: { mn: "9 сар", en: "Sep", cn: "9月" }, dates: "04, 11, 18" },
+      { month: { mn: "10 сар", en: "Oct", cn: "10月" }, dates: "09, 16, 23" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Жинин", en: "Erlian → Jining", cn: "二连 → 集宁" }, desc: { mn: "5 одтой Water World рашаан цогцолборт байрлана.", en: "Stay at 5-star Water World resort.", cn: "入境后前往集宁温泉。" }, meals: ["dinner"] },
+      { route: { mn: "Жинин → Мини Аватаар → Хөх хот", en: "Jining → Mini Avatar → Hohhot", cn: "集宁 → 林湖 → 呼市" }, desc: { mn: "Хулын цамхаг үзнэ. Шилэн гүүр, амьтны хүрээлэн, усан паркаар зугаацна.", en: "Visit Phoenix Tower. Glass bridge, zoo, water park.", cn: "参观凤凰塔、动物园、玻璃桥、水世界。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Хөх хот", en: "Hohhot", cn: "呼市" }, desc: { mn: "Шинжлэх ухааны музей. Чөлөөт цаг.", en: "Science museum. Free time.", cn: "科技馆，自由活动。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Хөх хот → Эрээн", en: "Hohhot → Erlian", cn: "呼市 → 二连" }, desc: { mn: "Эрээн хот руу автобусаар буцна. Чөлөөт цаг.", en: "Return to Erlian by bus. Free time.", cn: "返回二连浩特，自由活动。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Эрээн → Замын-Үүд", en: "Erlian → Zamiin-Uud", cn: "二连 → 扎门乌德" }, desc: { mn: "Хил нэвтрэн аялал өндөрлөнө.", en: "Cross border, tour ends.", cn: "乘坐国际客车出境。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 4, cat: "china", bg: "bg-china-4", emoji: "&#9968;",
+    title: { mn: "Жинин - Утай уул - Бээжин", en: "Jining - Wutai Mountain - Beijing", cn: "集宁 - 五台山 - 北京" },
+    route: { mn: "Эрээн → Жинин → Утай → Бээжин → Эрээн", en: "Erlian → Jining → Wutai → Beijing → Erlian", cn: "二连 → 集宁 → 五台山 → 北京 → 二连" },
+    days: 7, nights: 6,
+    price: "2,450", priceCurrency: "&#165;", childPrice: "2,050",
+    badge: { mn: "Шинэ", en: "New", cn: "新" },
+    schedule: [
+      { month: { mn: "5 сар", en: "May", cn: "5月" }, dates: "09, 16, 23" },
+      { month: { mn: "6 сар", en: "Jun", cn: "6月" }, dates: "06, 20, 27" },
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "25" },
+      { month: { mn: "8 сар", en: "Aug", cn: "8月" }, dates: "01, 15, 29" },
+      { month: { mn: "9 сар", en: "Sep", cn: "9月" }, dates: "05, 12" },
+      { month: { mn: "10 сар", en: "Oct", cn: "10月" }, dates: "24" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Жинин", en: "Erlian → Jining", cn: "二连 → 集宁" }, desc: { mn: "Жинин хотын халуун рашаанд байрлана.", en: "Stay at Jining hot springs.", cn: "前往集宁永亮温泉入住休息。" }, meals: ["dinner"] },
+      { route: { mn: "Жинин → Утай уул", en: "Jining → Wutai Mountain", cn: "集宁 → 五台山" }, desc: { mn: "Утай уулын Дайлуо оргилоор зочилно.", en: "Visit Dailuo Peak at Wutai Mountain.", cn: "游览黛螺顶。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Утай уул", en: "Wutai Mountain", cn: "五台山" }, desc: { mn: "Фому агуй, Жэнхай сүм, Пусадинг үзнэ.", en: "Visit Buddha Mother Cave, Zhenhai Temple, Pusading.", cn: "参观佛母洞、镇海寺、菩萨顶。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Утай → Бээжин", en: "Wutai → Beijing", cn: "五台山 → 北京" }, desc: { mn: "Бээжин хотод ирж амьтны хүрээлэн, далайн ертөнц үзнэ.", en: "Arrive in Beijing, visit zoo and aquarium.", cn: "游览动物园、海底世界。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Бээжин", en: "Beijing", cn: "北京" }, desc: { mn: "Тяньаньмэн талбай, Байрон зах. Шувууний үүрний гадна зураг авахуулна.", en: "Tiananmen Square, Bairong Market, Bird's Nest photo.", cn: "天安门广场、百荣市场、鸟巢拍照。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Бээжин → Эрээн", en: "Beijing → Erlian", cn: "北京 → 二连" }, desc: { mn: "Их цагаан хэрэм үзээд Эрээн руу буцна.", en: "Visit Great Wall, return to Erlian.", cn: "游览长城后返回二连。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Эрээн → Улаанбаатар", en: "Erlian → Ulaanbaatar", cn: "二连 → 乌兰巴托" }, desc: { mn: "Хил нэвтрэн Улаанбаатар руу буцна.", en: "Cross border, return to Ulaanbaatar.", cn: "办理出境返回乌兰巴托。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 5, cat: "china", bg: "bg-china-5", emoji: "&#127961;",
+    title: { mn: "Жинин - Бээжин - Жанжакоу", en: "Jining - Beijing - Zhangjiakou", cn: "集宁 - 北京 - 张家口" },
+    route: { mn: "Эрээн → Жинин → Бээжин → Жанжакоу → Эрээн", en: "Erlian → Jining → Beijing → Zhangjiakou → Erlian", cn: "二连 → 集宁 → 北京 → 张家口 → 二连" },
+    days: 6, nights: 5,
+    price: "2,300", priceCurrency: "&#165;", childPrice: "1,900",
+    badge: null,
+    schedule: [
+      { month: { mn: "5 сар", en: "May", cn: "5月" }, dates: "08, 15, 29" },
+      { month: { mn: "6 сар", en: "Jun", cn: "6月" }, dates: "05, 12, 26" },
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "03, 17, 24" },
+      { month: { mn: "8 сар", en: "Aug", cn: "8月" }, dates: "07, 14, 28" },
+      { month: { mn: "9 сар", en: "Sep", cn: "9月" }, dates: "04, 11, 18" },
+      { month: { mn: "10 сар", en: "Oct", cn: "10月" }, dates: "09, 16, 23" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Жинин", en: "Erlian → Jining", cn: "二连 → 集宁" }, desc: { mn: "33 төрлийн халуун рашаан бүхий амралтын цогцолборт амарна.", en: "Relax at resort with 33 types of hot springs.", cn: "前往集宁永亮温泉入住休息。" }, meals: ["dinner"] },
+      { route: { mn: "Жинин → Бээжин", en: "Jining → Beijing", cn: "集宁 → 北京" }, desc: { mn: "Цагаан хэрэм, Олимпийн парк, Шувууний үүр, Усан шоо.", en: "Great Wall, Olympic Park, Bird's Nest, Water Cube.", cn: "游览长城、鸟巢拍照。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Бээжин", en: "Beijing", cn: "北京" }, desc: { mn: "Universal Studios зугаа цэнгэлийн хүрээлэнд бүх өдрөө өнгөрөөнө.", en: "Full day at Universal Studios.", cn: "全天环球影城。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Бээжин → Жанжакоу", en: "Beijing → Zhangjiakou", cn: "北京 → 张家口" }, desc: { mn: "Амьтны хүрээлэн, далайн аквариум. Жанжакоу халуун рашаан.", en: "Zoo, aquarium. Zhangjiakou hot springs.", cn: "动物园海底，张家口温泉酒店。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Жанжакоу → Эрээн", en: "Zhangjiakou → Erlian", cn: "张家口 → 二连" }, desc: { mn: "Эрээн хот руу буцна.", en: "Return to Erlian.", cn: "返回二连浩特。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Эрээн → Замын-Үүд", en: "Erlian → Zamiin-Uud", cn: "二连 → 扎门乌德" }, desc: { mn: "Хил нэвтэрнэ.", en: "Cross the border.", cn: "办理出境。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 6, cat: "china", bg: "bg-china-6", emoji: "&#128042;",
+    title: { mn: "Жинин - Линхү - Ордос - Хөх хот", en: "Jining - Linhu - Ordos - Hohhot", cn: "集宁 - 林湖 - 鄂尔多斯 - 呼市" },
+    route: { mn: "Эрээн → Жинин → Линхү → Ордос → Хөх хот → Эрээн", en: "Erlian → Jining → Linhu → Ordos → Hohhot → Erlian", cn: "二连 → 集宁 → 林湖 → 鄂尔多斯 → 呼市" },
+    days: 6, nights: 5,
+    price: "1,450", priceCurrency: "&#165;", childPrice: "1,050",
+    badge: null,
+    schedule: [
+      { month: { mn: "5 сар", en: "May", cn: "5月" }, dates: "10, 17, 24" },
+      { month: { mn: "6 сар", en: "Jun", cn: "6月" }, dates: "07, 14, 21" },
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "26" },
+      { month: { mn: "8 сар", en: "Aug", cn: "8月" }, dates: "09, 16, 23" },
+      { month: { mn: "9 сар", en: "Sep", cn: "9月" }, dates: "06, 13, 20" },
+      { month: { mn: "10 сар", en: "Oct", cn: "10月" }, dates: "11, 28" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Жинин", en: "Erlian → Jining", cn: "二连 → 集宁" }, desc: { mn: "Water World 5 одтой рашаанд байрлана.", en: "Stay at 5-star Water World resort.", cn: "前往集宁永亮温泉。" }, meals: ["dinner"] },
+      { route: { mn: "Жинин → Линхү → Хөх хот", en: "Jining → Linhu → Hohhot", cn: "集宁 → 林湖 → 呼市" }, desc: { mn: "Хүслийн сувраг, арьсны эдлэл дэлгүүр. Амьтны хүрээлэн, усан парк, шилэн гүүр.", en: "Phoenix Pagoda, leather shop. Zoo, water park, glass bridge.", cn: "参观凤凰塔、皮草城、动物园、玻璃桥、水世界。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Хөх хот → Ордос", en: "Hohhot → Ordos", cn: "呼市 → 鄂尔多斯" }, desc: { mn: "Чингис хааны онгон цогцолбор, Канбаши шинэ хот. Ванжахуй усан парктай буудал.", en: "Genghis Khan Mausoleum, Kangbashi new city. Wanjiahui water park hotel.", cn: "参观成陵祭祀、康巴什，入住万家惠。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Ордос → Хөх хот", en: "Ordos → Hohhot", cn: "鄂尔多斯 → 呼市" }, desc: { mn: "Хөх хотод шоппинг, чөлөөт цаг.", en: "Shopping and free time in Hohhot.", cn: "前往呼和浩特，自由购物。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Хөх хот → Эрээн", en: "Hohhot → Erlian", cn: "呼市 → 二连" }, desc: { mn: "Эрээн хот руу буцна, чөлөөт цаг.", en: "Return to Erlian, free time.", cn: "返回二连浩特，自由活动。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Эрээн → Замын-Үүд", en: "Erlian → Zamiin-Uud", cn: "二连 → 扎门乌德" }, desc: { mn: "Хил нэвтрэн аялал дуусна.", en: "Cross border, tour ends.", cn: "办理出境。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 7, cat: "china", bg: "bg-china-7", emoji: "&#128716;",
+    title: { mn: "Жинин - Утай уул - Хөх хот", en: "Jining - Wutai Mountain - Hohhot", cn: "集宁 - 五台山 - 呼市" },
+    route: { mn: "Эрээн → Жинин → Утай → Хөх хот → Эрээн", en: "Erlian → Jining → Wutai → Hohhot → Erlian", cn: "二连 → 集宁 → 五台山 → 呼市 → 二连" },
+    days: 6, nights: 5,
+    price: "1,650", priceCurrency: "&#165;", childPrice: "1,250",
+    badge: null,
+    schedule: [
+      { month: { mn: "5 сар", en: "May", cn: "5月" }, dates: "09, 16, 23" },
+      { month: { mn: "6 сар", en: "Jun", cn: "6月" }, dates: "06, 13, 27" },
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "04, 18, 25" },
+      { month: { mn: "8 сар", en: "Aug", cn: "8月" }, dates: "08, 15, 22" },
+      { month: { mn: "9 сар", en: "Sep", cn: "9月" }, dates: "05, 19" },
+      { month: { mn: "10 сар", en: "Oct", cn: "10月" }, dates: "24" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Жинин", en: "Erlian → Jining", cn: "二连 → 集宁" }, desc: { mn: "Water World рашаан цогцолборт байрлана.", en: "Stay at Water World hot spring resort.", cn: "前往集宁永亮温泉。" }, meals: ["dinner"] },
+      { route: { mn: "Жинин → Утай уул", en: "Jining → Wutai", cn: "集宁 → 五台山" }, desc: { mn: "Дайло Дин оргилоор зочилно.", en: "Visit Dailuo Peak.", cn: "游览黛螺顶。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Утай уул", en: "Wutai Mountain", cn: "五台山" }, desc: { mn: "Бурхан шашны Эхи Умай, Лус дарсан сүм, Фу За оргил.", en: "Buddhist temples and sacred peaks.", cn: "参观佛母洞、镇海寺、菩萨顶。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Утай → Хөх хот", en: "Wutai → Hohhot", cn: "五台 → 呼市" }, desc: { mn: "Хөх хотод ирж чөлөөт цаг, худалдааны гудамж.", en: "Arrive in Hohhot, shopping.", cn: "前往呼和浩特，自由活动。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Хөх хот → Эрээн", en: "Hohhot → Erlian", cn: "呼市 → 二连" }, desc: { mn: "Эрээн хот руу буцна.", en: "Return to Erlian.", cn: "返回二连浩特。" }, meals: ["breakfast"] },
+      { route: { mn: "Эрээн → Замын-Үүд", en: "Erlian → Zamiin-Uud", cn: "二连 → 扎门乌德" }, desc: { mn: "Хил нэвтрэн аялал дуусна.", en: "Cross border, tour ends.", cn: "办理出境。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 8, cat: "china", bg: "bg-china-8", emoji: "&#129657;",
+    title: { mn: "Жинин - Хөх хот (Шинжилгээний аялал)", en: "Jining - Hohhot (Medical Check-up Tour)", cn: "集宁 - 呼市（体检之旅）" },
+    route: { mn: "Эрээн → Жинин → Мини Аватаар → Хөх хот → Эрээн", en: "Erlian → Jining → Mini Avatar → Hohhot → Erlian", cn: "二连 → 集宁 → 林湖 → 呼市 → 二连" },
+    days: 5, nights: 4,
+    price: "1,250", priceCurrency: "&#165;", childPrice: "980",
+    badge: { mn: "Эрүүл мэнд", en: "Medical", cn: "体检" },
+    schedule: [
+      { month: { mn: "5 сар", en: "May", cn: "5月" }, dates: "09, 16, 23, 31" },
+      { month: { mn: "6 сар", en: "Jun", cn: "6月" }, dates: "06, 13, 20, 27" },
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "04, 18, 25" },
+      { month: { mn: "8 сар", en: "Aug", cn: "8月" }, dates: "01, 08, 15, 22, 29" },
+      { month: { mn: "9 сар", en: "Sep", cn: "9月" }, dates: "05, 12, 19, 26" },
+      { month: { mn: "10 сар", en: "Oct", cn: "10月" }, dates: "10, 17, 24, 31" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Жинин", en: "Erlian → Jining", cn: "二连 → 集宁" }, desc: { mn: "Жинин рашаан, халуун усны газарт байрлана.", en: "Stay at Jining hot spring resort.", cn: "入境后前往集宁温泉。" }, meals: ["dinner"] },
+      { route: { mn: "Жинин → Мини Аватаар → Хөх хот", en: "Jining → Mini Avatar → Hohhot", cn: "集宁 → 林湖 → 呼市" }, desc: { mn: "Хүслийн суварга, Мини Аватаар, шилэн гүүр, амьтны хүрээлэн, усан парк.", en: "Phoenix Pagoda, Mini Avatar, glass bridge, zoo, water park.", cn: "参观凤凰塔、动物园、玻璃桥、水世界。" }, meals: ["breakfast", "dinner"] },
+      { route: { mn: "Хөх хот", en: "Hohhot", cn: "呼市" }, desc: { mn: "Эрүүл мэндийн үзлэгт орно. ШУ-ны музей, Алтан хааны талбай.", en: "Medical check-up. Science museum, Golden Khan Square.", cn: "空腹体检，科技馆，大昭寺外观拍照。" }, meals: ["breakfast", "lunch"] },
+      { route: { mn: "Хөх хот → Эрээн", en: "Hohhot → Erlian", cn: "呼市 → 二连" }, desc: { mn: "Шинжилгээний хариу авч Эрээн хот руу буцна.", en: "Receive medical results, return to Erlian.", cn: "取体检报告后返回二连。" }, meals: ["breakfast"] },
+      { route: { mn: "Эрээн → Замын-Үүд", en: "Erlian → Zamiin-Uud", cn: "二连 → 扎门乌德" }, desc: { mn: "Хил нэвтрэн Улаанбаатар руу буцна.", en: "Cross border, return to Ulaanbaatar.", cn: "乘坐国际客车出境。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 9, cat: "mongolia", bg: "bg-mongol-1", emoji: "&#127757;",
+    title: { mn: "Улаанбаатар - Хөвсгөл нуур (Гүнзгий аялал)", en: "Ulaanbaatar - Khuvsgul Lake (Deep Tour)", cn: "乌兰巴托 - 库苏古尔湖（深度游）" },
+    route: { mn: "Эрээн → УБ → Дархан → Эрдэнэт → Хөвсгөл → УБ → Эрээн", en: "Erlian → UB → Darkhan → Erdenet → Khuvsgul → UB → Erlian", cn: "二连 → 乌兰巴托 → 达尔汗 → 额尔登特 → 库苏古尔 → 乌兰巴托" },
+    days: 9, nights: 8,
+    price: "---", priceCurrency: "", childPrice: "---",
+    badge: { mn: "Онцлох", en: "Featured", cn: "推荐" },
+    schedule: [
+      { month: { mn: "6-8 сар", en: "Jun-Aug", cn: "6-8月" }, dates: "---" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Замын-Үүд → УБ", en: "Erlian → ZU → UB", cn: "二连 → 扎门乌德 → 乌兰巴托" }, desc: { mn: "Хил нэвтрэн шөнийн галт тэрэгээр Улаанбаатар руу хөдөлнө.", en: "Cross border, overnight train to Ulaanbaatar.", cn: "出境乘卧铺列车前往乌兰巴托。" }, meals: [] },
+      { route: { mn: "Улаанбаатар", en: "Ulaanbaatar", cn: "乌兰巴托" }, desc: { mn: "Сүхбаатарын талбай, Чингис хааны музей, Монгол уран сайхны тоглолт, Зайсан толгой.", en: "Sukhbaatar Square, Chinggis Khan Museum, folk show, Zaisan Hill.", cn: "苏和巴托广场、成吉思汗博物馆、蒙古歌舞表演、苏军纪念塔。" }, meals: ["lunch", "dinner"] },
+      { route: { mn: "УБ → Дархан → Эрдэнэт", en: "UB → Darkhan → Erdenet", cn: "乌兰巴托 → 达尔汗 → 额尔登特" }, desc: { mn: "Монголын 2, 3 дахь том хотуудаар дайрна.", en: "Pass through Mongolia's 2nd and 3rd largest cities.", cn: "经过蒙古第二、第三大城市。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Эрдэнэт → Хөвсгөл нуур", en: "Erdenet → Khuvsgul Lake", cn: "额尔登特 → 库苏古尔湖" }, desc: { mn: "Монголын хамгийн том цэнгэг нуур. Ой, уул, нуурын гайхалтай үзэмж.", en: "Mongolia's largest freshwater lake. Stunning mountain and forest scenery.", cn: "蒙古最大淡水湖，景色壮观。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Хөвсгөл нуур", en: "Khuvsgul Lake", cn: "库苏古尔湖" }, desc: { mn: "Цаатан малчин айлаар зочилно. Завиар нуур тойрно, загас барина.", en: "Visit reindeer herders. Boat tour, fishing.", cn: "访问养鹿人家，搭汽艇游湖，钓鱼。" }, meals: ["breakfast", "lunch"] },
+      { route: { mn: "Хөвсгөл → Эрдэнэт", en: "Khuvsgul → Erdenet", cn: "库苏古尔 → 额尔登特" }, desc: { mn: "Байгалийн сайхан үзэмжийг дагаж буцна.", en: "Return enjoying natural scenery.", cn: "返回额尔登特。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Гандан хийд, Тэрэлж", en: "Gandan, Terelj", cn: "甘丹寺、特日勒吉" }, desc: { mn: "Гандан хийд, Чингис хааны хөшөө, Тэрэлж байгалийн цогцолбор. Морь унах, гэрт хонох.", en: "Gandan Monastery, Chinggis Khan Statue, Terelj. Horse riding, ger camp.", cn: "甘丹寺、成吉思汗雕像、特日勒吉国家公园。骑马，住蒙古包。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Тэрэлж → УБ → Эрээн", en: "Terelj → UB → Erlian", cn: "特日勒吉 → 乌兰巴托 → 二连" }, desc: { mn: "Дэлгүүр, Говь ноолуурын дэлгүүр. Галт тэрэгээр Эрээн руу.", en: "Shopping, Gobi Cashmere. Train to Erlian.", cn: "购物，戈壁羊绒店。坐火车返回二连。" }, meals: ["breakfast", "lunch"] },
+      { route: { mn: "Эрээн", en: "Erlian", cn: "二连浩特" }, desc: { mn: "Эрээнд ирж аялал дуусна.", en: "Arrive in Erlian, tour ends.", cn: "抵达二连，结束行程。" }, meals: [] },
+    ]
+  },
+  {
+    id: 10, cat: "mongolia", bg: "bg-mongol-2", emoji: "&#127993;",
+    title: { mn: "Монгол ан агнуурын аялал", en: "Mongolia Hunting Adventure", cn: "蒙古狩猎之旅" },
+    route: { mn: "Улаанбаатар → Ан агнуурын бүс → Тэрэлж → Улаанбаатар", en: "Ulaanbaatar → Hunting Zone → Terelj → Ulaanbaatar", cn: "乌兰巴托 → 狩猎场 → 特日勒吉 → 乌兰巴托" },
+    days: 7, nights: 6,
+    price: "---", priceCurrency: "", childPrice: "---",
+    badge: { mn: "Адвенчур", en: "Adventure", cn: "探险" },
+    schedule: [
+      { month: { mn: "Тусгай", en: "Custom", cn: "定制" }, dates: "---" },
+    ],
+    itinerary: [
+      { route: { mn: "Улаанбаатар", en: "Ulaanbaatar", cn: "乌兰巴托" }, desc: { mn: "Улаанбаатарт ирж буудалд байрлана.", en: "Arrive in Ulaanbaatar, check in.", cn: "抵达乌兰巴托入住。" }, meals: ["dinner"] },
+      { route: { mn: "Бэлтгэл, сургалт", en: "Preparation & Training", cn: "采购物资，射击训练" }, desc: { mn: "Ан агнуурын бүсэд очно. Тоног хэрэгсэл, мэдлэг олж авна. Бай буудах дадлага.", en: "Arrive at hunting zone. Equipment & knowledge training. Target practice.", cn: "抵达狩猎场，学习装备和打猎知识，打靶射击训练。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Ан агнуурын бүс", en: "Hunting Zone", cn: "狩猎场" }, desc: { mn: "Мэргэжлийн хөтөчтэй ан агнуурын газраар аялна.", en: "Explore the hunting area with professional guide.", cn: "专业猎导带我们探秘猎区。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Ой, тал", en: "Forest & Steppe", cn: "森林草原" }, desc: { mn: "Ойн аялал, нүүдэлчин амьдралтай танилцах.", en: "Forest trek, experience nomadic culture.", cn: "森林远足，走进牧民家体验游牧文化。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Тэрэлж, Чингис хөшөө", en: "Terelj, Chinggis Statue", cn: "特日勒吉，成吉思汗雕像" }, desc: { mn: "Тэрэлж цогцолбор, Чингис хааны хөшөөгөөр зочилно.", en: "Visit Terelj Park and Chinggis Khan Statue.", cn: "特日勒吉草原、成吉思汗雕像。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Улаанбаатар", en: "Ulaanbaatar", cn: "乌兰巴托" }, desc: { mn: "Чингис хааны музей, Сүхбаатарын талбай, Говь ноолуурын дэлгүүр.", en: "Chinggis Khan Museum, Sukhbaatar Square, Gobi Cashmere.", cn: "成吉思汗博物馆、苏赫巴托广场、戈壁羊绒工厂店。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Гэрт буцах", en: "Return Home", cn: "返回温馨的家" }, desc: { mn: "Аялал өндөрлөнө.", en: "Tour ends.", cn: "结束行程。" }, meals: ["breakfast"] },
+    ]
+  },
+];
+
+let currentLang = 'mn';
+
+// ===== LANGUAGE FUNCTIONS =====
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (i18n[lang][key]) el.placeholder = i18n[lang][key];
+  });
+  renderTours();
+}
+
+function t(key) { return i18n[currentLang][key] || key; }
+
+// ===== TOUR RENDERING =====
+function renderTours() {
+  const grid = document.getElementById('toursGrid');
+  const activeFilter = document.querySelector('.tour-cat-btn.active');
+  const filter = activeFilter ? activeFilter.dataset.filter || 'all' : 'all';
+  const filtered = filter === 'all' ? tours : tours.filter(t => t.cat === filter);
+
+  grid.innerHTML = filtered.map(tour => `
+    <div class="tour-card reveal visible" data-cat="${tour.cat}" onclick="openTour(${tour.id})">
+      <div class="tour-card-image">
+        <div class="tour-bg ${tour.bg}">${tour.emoji}</div>
+        ${tour.badge ? `<span class="tour-badge">${tour.badge[currentLang]}</span>` : ''}
+      </div>
+      <div class="tour-card-body">
+        <h3 class="tour-card-title">${tour.title[currentLang]}</h3>
+        <p class="tour-card-route">&#128205; ${tour.route[currentLang]}</p>
+        <div class="tour-card-meta">
+          <span class="tour-duration">&#128197; ${tour.days} ${t('days')} / ${tour.nights} ${t('nights')}</span>
+          <span class="tour-price">${tour.priceCurrency}${tour.price} <small>/ ${t('from')}</small></span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterTours(cat) {
+  document.querySelectorAll('.tour-cat-btn').forEach(b => {
+    b.classList.remove('active');
+    b.dataset.filter = b.dataset.filter || (b.textContent.trim() === t('cat_all') ? 'all' : '');
+  });
+  event.target.classList.add('active');
+  event.target.dataset.filter = cat;
+  renderTours();
+}
+
+function openTour(id) {
+  const tour = tours.find(t => t.id === id);
+  if (!tour) return;
+
+  const mealName = { breakfast: t('breakfast'), lunch: t('lunch'), dinner: t('dinner') };
+
+  document.getElementById('modalHeader').innerHTML = `
+    <h2>${tour.title[currentLang]}</h2>
+    <div class="modal-meta">
+      <span>&#128197; ${tour.days} ${t('days')} / ${tour.nights} ${t('nights')}</span>
+      <span>&#128205; ${tour.route[currentLang]}</span>
+    </div>
+  `;
+
+  let body = `<h3 style="margin-bottom:15px;color:var(--green-dark)">${t('itinerary')}</h3>`;
+  tour.itinerary.forEach((day, i) => {
+    body += `
+      <div class="itinerary-day">
+        <div class="day-number">${i + 1}</div>
+        <div class="day-content">
+          <h4>${day.route[currentLang]}</h4>
+          <p>${day.desc[currentLang]}</p>
+          ${day.meals.length ? `<div class="day-meals">${day.meals.map(m => `<span class="meal-tag">${mealName[m] || m}</span>`).join('')}</div>` : ''}
+        </div>
+      </div>`;
+  });
+
+  body += `<div class="modal-schedule"><h3>${t('schedule')}</h3>
+    <table class="schedule-table"><tr><th>${t('month')}</th><th>${t('dates')}</th></tr>
+    ${tour.schedule.map(s => `<tr><td>${s.month[currentLang]}</td><td>${s.dates}</td></tr>`).join('')}
+    </table></div>`;
+
+  body += `<div class="modal-price-box">
+    <div class="price-info">
+      <h3>${t('adult')}: ${tour.priceCurrency}${tour.price}</h3>
+      <p>${t('child')}: ${tour.priceCurrency}${tour.childPrice}</p>
+    </div>
+    <a href="tel:95961785" class="modal-cta">${t('book_now')} &#128222;</a>
+  </div>`;
+
+  document.getElementById('modalBody').innerHTML = body;
+  document.getElementById('tourModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('tourModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ===== NAV =====
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ===== PARTICLES =====
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDelay = Math.random() * 8 + 's';
+    p.style.animationDuration = (6 + Math.random() * 6) + 's';
+    p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+    container.appendChild(p);
+  }
+}
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===== FORM =====
+function handleSubmit(e) {
+  e.preventDefault();
+  alert(t('alert_sent'));
+  e.target.reset();
+}
+
+// ===== MODAL CLOSE ON OVERLAY =====
+document.getElementById('tourModal').addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal-overlay')) closeModal();
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// ===== INIT =====
+createParticles();
+renderTours();
+</script>
+</body>
+</html>
