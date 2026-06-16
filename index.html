@@ -22,7 +22,6 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -168,12 +167,21 @@ body {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #0a1f15 0%, #1a3a2a 30%, #2d5a3d 60%, #1a3a2a 100%);
+  background: url('assets/hero-bus.jpg') center center / cover no-repeat;
+  will-change: transform;
+  transform: translateZ(0);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,31,21,0.75) 0%, rgba(26,58,42,0.6) 50%, rgba(10,31,21,0.75) 100%);
 }
 .hero-particles {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  z-index: 1;
 }
 .particle {
   position: absolute;
@@ -189,35 +197,6 @@ body {
   20% { opacity: 0.8; }
   80% { opacity: 0.3; }
   100% { opacity: 0; transform: translateY(-20vh) scale(1.5); }
-}
-
-.hero-mountains {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40%;
-}
-.mountain {
-  position: absolute;
-  bottom: 0;
-  width: 0;
-  border-style: solid;
-}
-.mountain-1 {
-  left: -5%;
-  border-width: 0 300px 280px 300px;
-  border-color: transparent transparent rgba(45,90,61,0.4) transparent;
-}
-.mountain-2 {
-  left: 20%;
-  border-width: 0 400px 350px 350px;
-  border-color: transparent transparent rgba(45,90,61,0.3) transparent;
-}
-.mountain-3 {
-  right: -10%;
-  border-width: 0 350px 300px 400px;
-  border-color: transparent transparent rgba(45,90,61,0.35) transparent;
 }
 
 .hero-content {
@@ -313,9 +292,30 @@ body {
   100% { opacity: 0; top: 25px; }
 }
 
+/* ===== FLOATING DECORATIVE ELEMENTS ===== */
+.floating-decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+}
+.floating-decor svg {
+  animation: floatDrift 20s ease-in-out infinite;
+}
+@keyframes floatDrift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-20px) rotate(5deg); }
+  50% { transform: translateY(-10px) rotate(-3deg); }
+  75% { transform: translateY(-25px) rotate(4deg); }
+}
+.floating-decor:nth-child(2) svg { animation-delay: -5s; animation-duration: 25s; }
+.floating-decor:nth-child(3) svg { animation-delay: -10s; animation-duration: 22s; }
+
 /* ===== SECTION STYLES ===== */
 section {
   padding: 100px 40px;
+  position: relative;
+  overflow: hidden;
 }
 .section-header {
   text-align: center;
@@ -361,14 +361,15 @@ section {
   border-radius: 20px;
   overflow: hidden;
   aspect-ratio: 4/3;
-  background: linear-gradient(135deg, var(--green), var(--green-dark));
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-.about-image-inner {
-  font-size: 120px;
-  opacity: 0.3;
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+.about-image:hover img {
+  transform: scale(1.05);
 }
 .about-stats {
   display: grid;
@@ -432,28 +433,34 @@ section {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  transition: all 0.4s;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
   position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 .tour-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  transform: translateY(-8px) rotateX(2deg) rotateY(-1deg);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
 }
 .tour-card-image {
-  height: 200px;
+  height: 220px;
   position: relative;
   overflow: hidden;
 }
 .tour-card-image .tour-bg {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-  color: rgba(255,255,255,0.5);
-  transition: transform 0.5s;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+.tour-card-image .tour-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.4) 100%);
 }
 .tour-card:hover .tour-bg { transform: scale(1.1); }
 
@@ -467,6 +474,7 @@ section {
   border-radius: 20px;
   font-size: 12px;
   font-weight: 700;
+  z-index: 2;
 }
 .tour-card-body {
   padding: 25px;
@@ -672,6 +680,7 @@ section {
   font-size: 15px;
   cursor: pointer;
   transition: all 0.3s;
+  text-decoration: none;
 }
 .modal-cta:hover { transform: scale(1.05); }
 
@@ -679,6 +688,14 @@ section {
 #why {
   background: linear-gradient(135deg, var(--green-dark), var(--green));
   color: var(--white);
+  position: relative;
+}
+#why::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('assets/ger-wide.jpg') center center / cover no-repeat;
+  opacity: 0.1;
 }
 #why .section-title { color: var(--white); }
 #why .section-desc { color: rgba(255,255,255,0.7); }
@@ -688,6 +705,8 @@ section {
   gap: 30px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 .why-card {
   background: rgba(255,255,255,0.08);
@@ -716,6 +735,124 @@ section {
   color: rgba(255,255,255,0.7);
   line-height: 1.7;
 }
+
+/* ===== GALLERY ===== */
+#gallery {
+  background: var(--cream);
+  padding: 100px 40px;
+}
+.gallery-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  columns: 3;
+  column-gap: 20px;
+}
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.gallery-item:hover {
+  transform: scale(1.02);
+}
+.gallery-item img {
+  width: 100%;
+  display: block;
+  transition: transform 0.5s;
+}
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background 0.3s;
+}
+.gallery-item:hover::after {
+  background: rgba(0,0,0,0.15);
+}
+.gallery-zoom-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  color: white;
+  font-size: 36px;
+  z-index: 2;
+  transition: transform 0.3s;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+.gallery-item:hover .gallery-zoom-icon {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox-overlay.active { display: flex; }
+.lightbox-overlay img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: lightboxZoom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes lightboxZoom {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 36px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  transition: background 0.3s;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.2); }
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 48px;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  transition: background 0.3s;
+}
+.lightbox-nav:hover { background: rgba(255,255,255,0.2); }
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
 
 /* ===== CONTACT ===== */
 #contact {
@@ -860,6 +997,24 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 968px) {
@@ -886,24 +1041,15 @@ footer {
   .modal { border-radius: 16px 16px 0 0; max-height: 90vh; }
   .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
   .modal-price-box { flex-direction: column; gap: 15px; text-align: center; }
+  .gallery-grid { columns: 2; }
 }
 @media (max-width: 600px) {
   .footer-grid { grid-template-columns: 1fr; }
   .about-stats { grid-template-columns: 1fr; }
   .hero-logo { width: 130px; height: 130px; }
+  .gallery-grid { columns: 1; }
+  #gallery { padding: 60px 20px; }
 }
-
-/* ===== GRADIENT BACKGROUNDS FOR TOUR CARDS ===== */
-.bg-china-1 { background: linear-gradient(135deg, #2c3e50, #3498db); }
-.bg-china-2 { background: linear-gradient(135deg, #8e44ad, #3498db); }
-.bg-china-3 { background: linear-gradient(135deg, #e74c3c, #f39c12); }
-.bg-china-4 { background: linear-gradient(135deg, #16a085, #f39c12); }
-.bg-china-5 { background: linear-gradient(135deg, #2c3e50, #27ae60); }
-.bg-china-6 { background: linear-gradient(135deg, #d35400, #e74c3c); }
-.bg-china-7 { background: linear-gradient(135deg, #2980b9, #2c3e50); }
-.bg-china-8 { background: linear-gradient(135deg, #8e44ad, #c0392b); }
-.bg-mongol-1 { background: linear-gradient(135deg, #1a5f2a, #87CEEB); }
-.bg-mongol-2 { background: linear-gradient(135deg, #3a3a00, #556b2f); }
 </style>
 </head>
 <body>
@@ -918,6 +1064,7 @@ footer {
     <li><a href="#about" data-i18n="nav_about">Бидний тухай</a></li>
     <li><a href="#tours" data-i18n="nav_tours">Аялалууд</a></li>
     <li><a href="#why" data-i18n="nav_why">Яагаад бид</a></li>
+    <li><a href="#gallery" data-i18n="nav_gallery">Зургийн цомог</a></li>
     <li><a href="#contact" data-i18n="nav_contact">Холбоо барих</a></li>
     <li>
       <div class="lang-switcher">
@@ -934,13 +1081,8 @@ footer {
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg" id="heroBg"></div>
   <div class="hero-particles" id="particles"></div>
-  <div class="hero-mountains">
-    <div class="mountain mountain-1"></div>
-    <div class="mountain mountain-2"></div>
-    <div class="mountain mountain-3"></div>
-  </div>
   <div class="hero-content">
     <img src="assets/logo.jpg" alt="Khangarid Tour" class="hero-logo">
     <h1 class="hero-title" data-i18n="hero_title">ХАНГАРЬД <span>ТУРС</span></h1>
@@ -954,6 +1096,14 @@ footer {
 
 <!-- ===== ABOUT ===== -->
 <section id="about">
+  <!-- Floating decorative elements -->
+  <div class="floating-decor" style="top:10%;left:5%">
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><path d="M40 0L48 32L80 40L48 48L40 80L32 48L0 40L32 32Z" fill="var(--gold)"/></svg>
+  </div>
+  <div class="floating-decor" style="bottom:15%;right:8%">
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="var(--gold)" stroke-width="3" fill="none"/><path d="M30 5L35 25L55 30L35 35L30 55L25 35L5 30L25 25Z" fill="var(--gold)"/></svg>
+  </div>
+
   <div class="section-header reveal">
     <span class="section-tag" data-i18n="about_tag">БИДНИЙ ТУХАЙ</span>
     <h2 class="section-title" data-i18n="about_title">Монгол нүүдэлчдийн замаар</h2>
@@ -964,10 +1114,10 @@ footer {
     </div>
   </div>
   <div class="about-grid">
-    <div class="about-image reveal">
-      <div class="about-image-inner">&#127968;</div>
+    <div class="about-image reveal-left">
+      <img src="assets/ger-inside.jpg" alt="Mongolian Ger Interior">
     </div>
-    <div class="reveal">
+    <div class="reveal-right">
       <p style="font-size:16px;line-height:1.9;color:var(--text-light);margin-bottom:20px" data-i18n="about_p1">
         Хангарьд Турс нь Монголын аялал жуулчлалын салбарт мэргэшсэн компани бөгөөд БНХАУ (Хятад), Монгол чиглэлийн аялалын үйлчилгээ үзүүлдэг. Бид таны аялалыг аюулгүй, тав тухтай, мартагдашгүй болгоно.
       </p>
@@ -976,15 +1126,15 @@ footer {
       </p>
       <div class="about-stats">
         <div class="stat-item">
-          <div class="stat-number">10+</div>
+          <div class="stat-number" data-count="11">0</div>
           <div class="stat-label" data-i18n="stat_tours">Аялалын хөтөлбөр</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">2</div>
+          <div class="stat-number" data-count="2">0</div>
           <div class="stat-label" data-i18n="stat_countries">Улс орон</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">3</div>
+          <div class="stat-number" data-count="3">0</div>
           <div class="stat-label" data-i18n="stat_languages">Хэлний үйлчилгээ</div>
         </div>
       </div>
@@ -994,6 +1144,9 @@ footer {
 
 <!-- ===== TOURS ===== -->
 <section id="tours">
+  <div class="floating-decor" style="top:5%;right:3%">
+    <svg width="100" height="100" viewBox="0 0 100 100" fill="none"><rect x="10" y="10" width="80" height="80" rx="8" stroke="var(--green)" stroke-width="3" fill="none"/><rect x="25" y="25" width="50" height="50" rx="5" stroke="var(--green)" stroke-width="2" fill="none" transform="rotate(45 50 50)"/></svg>
+  </div>
   <div class="section-header reveal">
     <span class="section-tag" data-i18n="tours_tag">АЯЛАЛУУД</span>
     <h2 class="section-title" data-i18n="tours_title">Аялалын хөтөлбөрүүд</h2>
@@ -1010,7 +1163,7 @@ footer {
 
 <!-- ===== WHY US ===== -->
 <section id="why">
-  <div class="section-header reveal">
+  <div class="section-header reveal" style="position:relative;z-index:1">
     <span class="section-tag" style="color:var(--gold-light)" data-i18n="why_tag">ЯАГААД БИД</span>
     <h2 class="section-title" data-i18n="why_title">Хангарьд Турс-ыг сонгох шалтгаан</h2>
     <p class="section-desc" data-i18n="why_desc">Таны аялал бидний хариуцлага</p>
@@ -1038,6 +1191,57 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- ===== GALLERY ===== -->
+<section id="gallery">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="gallery_tag">ЗУРГИЙН ЦОМОГ</span>
+    <h2 class="section-title" data-i18n="gallery_title">Аяллын мөчүүд</h2>
+    <p class="section-desc" data-i18n="gallery_desc">Монголын гайхалтай үзэмж, соёл, амьдралын төрх</p>
+  </div>
+  <div class="gallery-grid reveal" id="galleryGrid">
+    <div class="gallery-item" onclick="openLightbox(0)">
+      <img src="assets/ger-inside.jpg" alt="Ger Interior" loading="lazy">
+      <span class="gallery-zoom-icon">&#128269;</span>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(1)">
+      <img src="assets/hiking.jpg" alt="Hiking" loading="lazy">
+      <span class="gallery-zoom-icon">&#128269;</span>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(2)">
+      <img src="assets/food.jpg" alt="Mongolian Food" loading="lazy">
+      <span class="gallery-zoom-icon">&#128269;</span>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(3)">
+      <img src="assets/landscape.jpg" alt="Landscape" loading="lazy">
+      <span class="gallery-zoom-icon">&#128269;</span>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(4)">
+      <img src="assets/dairy.jpg" alt="Dairy Products" loading="lazy">
+      <span class="gallery-zoom-icon">&#128269;</span>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(5)">
+      <img src="assets/ger-decor.jpg" alt="Ger Decorations" loading="lazy">
+      <span class="gallery-zoom-icon">&#128269;</span>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(6)">
+      <img src="assets/ger-cooking.jpg" alt="Ger Cooking" loading="lazy">
+      <span class="gallery-zoom-icon">&#128269;</span>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(7)">
+      <img src="assets/ger-life.jpg" alt="Ger Life" loading="lazy">
+      <span class="gallery-zoom-icon">&#128269;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">&#10005;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1, event)">&#10094;</button>
+  <img id="lightboxImg" src="" alt="Gallery Image">
+  <button class="lightbox-nav lightbox-next" onclick="navLightbox(1, event)">&#10095;</button>
+</div>
 
 <!-- ===== CONTACT ===== -->
 <section id="contact">
@@ -1101,6 +1305,7 @@ footer {
       <a href="#about" data-i18n="nav_about">Бидний тухай</a>
       <a href="#tours" data-i18n="nav_tours">Аялалууд</a>
       <a href="#why" data-i18n="nav_why">Яагаад бид</a>
+      <a href="#gallery" data-i18n="nav_gallery">Зургийн цомог</a>
       <a href="#contact" data-i18n="nav_contact">Холбоо барих</a>
     </div>
     <div class="footer-col">
@@ -1136,6 +1341,7 @@ const i18n = {
     nav_about: "Бидний тухай",
     nav_tours: "Аялалууд",
     nav_why: "Яагаад бид",
+    nav_gallery: "Зургийн цомог",
     nav_contact: "Холбоо барих",
     hero_title: "ХАНГАРЬД <span>ТУРС</span>",
     hero_subtitle: "АЯЛАЛ ЖУУЛЧЛАЛЫН КОМПАНИ",
@@ -1164,6 +1370,9 @@ const i18n = {
     why3_desc: "Халуун рашаан, 4-5 одтой зочид буудлуудад байрлах тансаг зэрэглэлийн үйлчилгээ",
     why4_title: "Хямд үнэ",
     why4_desc: "Хоол, байр, тээвэр бүгдийг багтаасан ил тод, хямд үнийн санал",
+    gallery_tag: "ЗУРГИЙН ЦОМОГ",
+    gallery_title: "Аяллын мөчүүд",
+    gallery_desc: "Монголын гайхалтай үзэмж, соёл, амьдралын төрх",
     contact_tag: "ХОЛБОО БАРИХ",
     contact_title: "Бидэнтэй холбогдох",
     contact_desc: "Аяллын талаар мэдээлэл авах, захиалга өгөхийг хүсвэл бидэнтэй холбогдоорой",
@@ -1205,6 +1414,7 @@ const i18n = {
     nav_about: "About Us",
     nav_tours: "Tours",
     nav_why: "Why Us",
+    nav_gallery: "Gallery",
     nav_contact: "Contact",
     hero_title: "KHANGARID <span>TOUR</span>",
     hero_subtitle: "TRAVEL & TOURISM COMPANY",
@@ -1233,6 +1443,9 @@ const i18n = {
     why3_desc: "4-5 star hotels with hot springs and premium resort facilities",
     why4_title: "Best Prices",
     why4_desc: "Transparent, affordable packages including meals, accommodation, and transport",
+    gallery_tag: "GALLERY",
+    gallery_title: "Journey Moments",
+    gallery_desc: "Stunning scenery, culture, and lifestyle of Mongolia",
     contact_tag: "CONTACT",
     contact_title: "Get in Touch",
     contact_desc: "Contact us for tour information and bookings",
@@ -1274,6 +1487,7 @@ const i18n = {
     nav_about: "关于我们",
     nav_tours: "旅游线路",
     nav_why: "为什么选择我们",
+    nav_gallery: "照片集",
     nav_contact: "联系我们",
     hero_title: "杭嘎日德 <span>旅行社</span>",
     hero_subtitle: "旅游服务公司",
@@ -1302,6 +1516,9 @@ const i18n = {
     why3_desc: "4-5星级酒店，配有温泉和高级度假设施",
     why4_title: "最优价格",
     why4_desc: "包含餐饮、住宿和交通的透明、实惠套餐",
+    gallery_tag: "照片集",
+    gallery_title: "旅行瞬间",
+    gallery_desc: "蒙古壮丽的风景、文化和生活方式",
     contact_tag: "联系我们",
     contact_title: "联系方式",
     contact_desc: "如需旅游信息和预订，请联系我们",
@@ -1341,10 +1558,14 @@ const i18n = {
   }
 };
 
+// ===== TOUR CARD IMAGE MAPPINGS =====
+const chinaImages = ['assets/bus-scene.jpg', 'assets/china-ad.jpg', 'assets/food.jpg', 'assets/meeting.jpg'];
+const mongoliaImages = ['assets/hiking.jpg', 'assets/landscape.jpg', 'assets/ger-life.jpg'];
+
 // ===== TOUR DATA =====
 const tours = [
   {
-    id: 1, cat: "china", bg: "bg-china-1", emoji: "&#127970;",
+    id: 1, cat: "china",
     title: { mn: "Жанжакоу - Тяньжин - Бээжин", en: "Zhangjiakou - Tianjin - Beijing", cn: "张家口 - 天津 - 北京" },
     route: { mn: "Эрээн → Жанжакоу → Тяньжин → Бээжин → Эрээн", en: "Erlian → Zhangjiakou → Tianjin → Beijing → Erlian", cn: "二连浩特 → 张家口 → 天津 → 北京 → 二连浩特" },
     days: 7, nights: 6,
@@ -1369,7 +1590,7 @@ const tours = [
     ]
   },
   {
-    id: 2, cat: "china", bg: "bg-china-2", emoji: "&#127956;",
+    id: 2, cat: "china",
     title: { mn: "Жинин - Датунг - Линхү - Хөх хот", en: "Jining - Datong - Linhu - Hohhot", cn: "集宁 - 大同 - 林湖 - 呼和浩特" },
     route: { mn: "Эрээн → Жинин → Датунг → Линхү → Хөх хот → Эрээн", en: "Erlian → Jining → Datong → Linhu → Hohhot → Erlian", cn: "二连 → 集宁 → 大同 → 林湖 → 呼和浩特" },
     days: 5, nights: 4,
@@ -1392,7 +1613,7 @@ const tours = [
     ]
   },
   {
-    id: 3, cat: "china", bg: "bg-china-3", emoji: "&#127749;",
+    id: 3, cat: "china",
     title: { mn: "Жинин - Мини Аватаар - Хөх хот", en: "Jining - Mini Avatar - Hohhot", cn: "集宁 - 林湖 - 呼市" },
     route: { mn: "Эрээн → Жинин → Мини Аватаар → Хөх хот → Эрээн", en: "Erlian → Jining → Mini Avatar → Hohhot → Erlian", cn: "二连 → 集宁 → 林湖 → 呼市" },
     days: 5, nights: 4,
@@ -1415,7 +1636,7 @@ const tours = [
     ]
   },
   {
-    id: 4, cat: "china", bg: "bg-china-4", emoji: "&#9968;",
+    id: 4, cat: "china",
     title: { mn: "Жинин - Утай уул - Бээжин", en: "Jining - Wutai Mountain - Beijing", cn: "集宁 - 五台山 - 北京" },
     route: { mn: "Эрээн → Жинин → Утай → Бээжин → Эрээн", en: "Erlian → Jining → Wutai → Beijing → Erlian", cn: "二连 → 集宁 → 五台山 → 北京 → 二连" },
     days: 7, nights: 6,
@@ -1440,7 +1661,7 @@ const tours = [
     ]
   },
   {
-    id: 5, cat: "china", bg: "bg-china-5", emoji: "&#127961;",
+    id: 5, cat: "china",
     title: { mn: "Жинин - Бээжин - Жанжакоу", en: "Jining - Beijing - Zhangjiakou", cn: "集宁 - 北京 - 张家口" },
     route: { mn: "Эрээн → Жинин → Бээжин → Жанжакоу → Эрээн", en: "Erlian → Jining → Beijing → Zhangjiakou → Erlian", cn: "二连 → 集宁 → 北京 → 张家口 → 二连" },
     days: 6, nights: 5,
@@ -1464,7 +1685,7 @@ const tours = [
     ]
   },
   {
-    id: 6, cat: "china", bg: "bg-china-6", emoji: "&#128042;",
+    id: 6, cat: "china",
     title: { mn: "Жинин - Линхү - Ордос - Хөх хот", en: "Jining - Linhu - Ordos - Hohhot", cn: "集宁 - 林湖 - 鄂尔多斯 - 呼市" },
     route: { mn: "Эрээн → Жинин → Линхү → Ордос → Хөх хот → Эрээн", en: "Erlian → Jining → Linhu → Ordos → Hohhot → Erlian", cn: "二连 → 集宁 → 林湖 → 鄂尔多斯 → 呼市" },
     days: 6, nights: 5,
@@ -1488,7 +1709,7 @@ const tours = [
     ]
   },
   {
-    id: 7, cat: "china", bg: "bg-china-7", emoji: "&#128716;",
+    id: 7, cat: "china",
     title: { mn: "Жинин - Утай уул - Хөх хот", en: "Jining - Wutai Mountain - Hohhot", cn: "集宁 - 五台山 - 呼市" },
     route: { mn: "Эрээн → Жинин → Утай → Хөх хот → Эрээн", en: "Erlian → Jining → Wutai → Hohhot → Erlian", cn: "二连 → 集宁 → 五台山 → 呼市 → 二连" },
     days: 6, nights: 5,
@@ -1512,7 +1733,7 @@ const tours = [
     ]
   },
   {
-    id: 8, cat: "china", bg: "bg-china-8", emoji: "&#129657;",
+    id: 8, cat: "china",
     title: { mn: "Жинин - Хөх хот (Шинжилгээний аялал)", en: "Jining - Hohhot (Medical Check-up Tour)", cn: "集宁 - 呼市（体检之旅）" },
     route: { mn: "Эрээн → Жинин → Мини Аватаар → Хөх хот → Эрээн", en: "Erlian → Jining → Mini Avatar → Hohhot → Erlian", cn: "二连 → 集宁 → 林湖 → 呼市 → 二连" },
     days: 5, nights: 4,
@@ -1535,7 +1756,7 @@ const tours = [
     ]
   },
   {
-    id: 9, cat: "mongolia", bg: "bg-mongol-1", emoji: "&#127757;",
+    id: 9, cat: "mongolia",
     title: { mn: "Улаанбаатар - Хөвсгөл нуур (Гүнзгий аялал)", en: "Ulaanbaatar - Khuvsgul Lake (Deep Tour)", cn: "乌兰巴托 - 库苏古尔湖（深度游）" },
     route: { mn: "Эрээн → УБ → Дархан → Эрдэнэт → Хөвсгөл → УБ → Эрээн", en: "Erlian → UB → Darkhan → Erdenet → Khuvsgul → UB → Erlian", cn: "二连 → 乌兰巴托 → 达尔汗 → 额尔登特 → 库苏古尔 → 乌兰巴托" },
     days: 9, nights: 8,
@@ -1557,7 +1778,7 @@ const tours = [
     ]
   },
   {
-    id: 10, cat: "mongolia", bg: "bg-mongol-2", emoji: "&#127993;",
+    id: 10, cat: "mongolia",
     title: { mn: "Монгол ан агнуурын аялал", en: "Mongolia Hunting Adventure", cn: "蒙古狩猎之旅" },
     route: { mn: "Улаанбаатар → Ан агнуурын бүс → Тэрэлж → Улаанбаатар", en: "Ulaanbaatar → Hunting Zone → Terelj → Ulaanbaatar", cn: "乌兰巴托 → 狩猎场 → 特日勒吉 → 乌兰巴托" },
     days: 7, nights: 6,
@@ -1574,6 +1795,27 @@ const tours = [
       { route: { mn: "Тэрэлж, Чингис хөшөө", en: "Terelj, Chinggis Statue", cn: "特日勒吉，成吉思汗雕像" }, desc: { mn: "Тэрэлж цогцолбор, Чингис хааны хөшөөгөөр зочилно.", en: "Visit Terelj Park and Chinggis Khan Statue.", cn: "特日勒吉草原、成吉思汗雕像。" }, meals: ["breakfast", "lunch", "dinner"] },
       { route: { mn: "Улаанбаатар", en: "Ulaanbaatar", cn: "乌兰巴托" }, desc: { mn: "Чингис хааны музей, Сүхбаатарын талбай, Говь ноолуурын дэлгүүр.", en: "Chinggis Khan Museum, Sukhbaatar Square, Gobi Cashmere.", cn: "成吉思汗博物馆、苏赫巴托广场、戈壁羊绒工厂店。" }, meals: ["breakfast", "lunch", "dinner"] },
       { route: { mn: "Гэрт буцах", en: "Return Home", cn: "返回温馨的家" }, desc: { mn: "Аялал өндөрлөнө.", en: "Tour ends.", cn: "结束行程。" }, meals: ["breakfast"] },
+    ]
+  },
+  {
+    id: 11, cat: "mongolia",
+    title: { mn: "Хүүхдийн зуны зуслан", en: "Children's Summer Camp", cn: "儿童夏令营" },
+    route: { mn: "Эрээн → Замын-Үүд → УБ → Баянгол зуслан → УБ → Эрээн", en: "Erlian → ZU → UB → Bayangol Camp → UB → Erlian", cn: "二连 → 扎门乌德 → 乌兰巴托 → 巴彦戈勒营地 → 乌兰巴托 → 二连" },
+    days: 8, nights: 7,
+    price: "---", priceCurrency: "", childPrice: "---",
+    badge: { mn: "Хүүхдэд", en: "Kids", cn: "儿童" },
+    schedule: [
+      { month: { mn: "7 сар", en: "Jul", cn: "7月" }, dates: "20" },
+    ],
+    itinerary: [
+      { route: { mn: "Эрээн → Замын-Үүд → УБ", en: "Erlian → ZU → UB", cn: "二连 → 扎门乌德 → 乌兰巴托" }, desc: { mn: "Хил нэвтрэн галт тэрэгээр (18:05) Улаанбаатар руу.", en: "Cross border, overnight train to UB.", cn: "出境乘火车前往乌兰巴托。" }, meals: [] },
+      { route: { mn: "Улаанбаатар", en: "Ulaanbaatar", cn: "乌兰巴托" }, desc: { mn: "Сүхбаатарын талбай, дурсгалын зураг. Зуслан руу хөдөлнө.", en: "Sukhbaatar Square, then head to camp.", cn: "苏和巴托广场，前往营地。" }, meals: ["lunch", "dinner"] },
+      { route: { mn: "Баянгол зуслан", en: "Bayangol Camp", cn: "巴彦戈勒营地" }, desc: { mn: "Спорт, урлаг, teambuilding, уулын алхалт, од харах.", en: "Camp activities: sports, arts, hiking, stargazing.", cn: "营地活动：体育、艺术、远足、观星。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Баянгол зуслан", en: "Bayangol Camp", cn: "巴彦戈勒营地" }, desc: { mn: "Мэлхий хад, Гүнжийн сүм үзнэ.", en: "Visit Turtle Rock, Gunji Temple.", cn: "龟石、根基寺。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Баянгол зуслан", en: "Bayangol Camp", cn: "巴彦戈勒营地" }, desc: { mn: "Цонжин Болдог (Чингис хааны хөшөө), Чингис хааны музей.", en: "Chinggis Khan Statue & Museum.", cn: "成吉思汗雕像和博物馆。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Баянгол зуслан", en: "Bayangol Camp", cn: "巴彦戈勒营地" }, desc: { mn: "Малчин айлаар зочлох, морь унах, нүүдэлчин соёлтой танилцах.", en: "Visit nomad family, horse riding, experience nomadic culture.", cn: "游牧家庭访问、骑马、体验游牧文化。" }, meals: ["breakfast", "lunch", "dinner"] },
+      { route: { mn: "Зуслан → УБ", en: "Camp → UB", cn: "营地 → 乌兰巴托" }, desc: { mn: "Зайсан толгой, хотын аялал. Их дэлгүүр/Чингис хааны музей. Галт тэрэг (16:40).", en: "Zaisan Hill, city tour, shopping. Train at 16:40.", cn: "翟山、城市游览、购物。16:40乘火车。" }, meals: ["breakfast", "lunch"] },
+      { route: { mn: "Замын-Үүд → Эрээн", en: "ZU → Erlian", cn: "扎门乌德 → 二连" }, desc: { mn: "Хилээр нэвтрэн аялал дуусна.", en: "Cross border, tour ends.", cn: "过境，行程结束。" }, meals: ["breakfast"] },
     ]
   },
 ];
@@ -1599,6 +1841,15 @@ function setLang(lang) {
 function t(key) { return i18n[currentLang][key] || key; }
 
 // ===== TOUR RENDERING =====
+function getTourImage(tour) {
+  if (tour.cat === 'china') {
+    return chinaImages[(tour.id - 1) % chinaImages.length];
+  } else {
+    const mIdx = tours.filter(t => t.cat === 'mongolia').indexOf(tour);
+    return mongoliaImages[mIdx % mongoliaImages.length];
+  }
+}
+
 function renderTours() {
   const grid = document.getElementById('toursGrid');
   const activeFilter = document.querySelector('.tour-cat-btn.active');
@@ -1608,7 +1859,7 @@ function renderTours() {
   grid.innerHTML = filtered.map(tour => `
     <div class="tour-card reveal visible" data-cat="${tour.cat}" onclick="openTour(${tour.id})">
       <div class="tour-card-image">
-        <div class="tour-bg ${tour.bg}">${tour.emoji}</div>
+        <div class="tour-bg" style="background-image:url('${getTourImage(tour)}')"></div>
         ${tour.badge ? `<span class="tour-badge">${tour.badge[currentLang]}</span>` : ''}
       </div>
       <div class="tour-card-body">
@@ -1708,11 +1959,108 @@ function createParticles() {
   }
 }
 
-// ===== SCROLL REVEAL =====
+// ===== PARALLAX HERO =====
+function initParallax() {
+  const heroBg = document.getElementById('heroBg');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrolled = window.scrollY;
+        if (scrolled < window.innerHeight) {
+          heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+
+// ===== COUNTER ANIMATION =====
+function initCounters() {
+  const counters = document.querySelectorAll('.stat-number[data-count]');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.dataset.animated) {
+        entry.target.dataset.animated = 'true';
+        const target = parseInt(entry.target.dataset.count);
+        const suffix = target > 10 ? '+' : '';
+        let current = 0;
+        const increment = Math.max(1, Math.floor(target / 40));
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          entry.target.textContent = current + suffix;
+        }, 40);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+}
+
+// ===== SCROLL REVEAL (including left/right) =====
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+// ===== GALLERY LIGHTBOX =====
+const galleryImages = [
+  'assets/ger-inside.jpg',
+  'assets/hiking.jpg',
+  'assets/food.jpg',
+  'assets/landscape.jpg',
+  'assets/dairy.jpg',
+  'assets/ger-decor.jpg',
+  'assets/ger-cooking.jpg',
+  'assets/ger-life.jpg'
+];
+let currentLightboxIndex = 0;
+
+function openLightbox(index) {
+  currentLightboxIndex = index;
+  document.getElementById('lightboxImg').src = galleryImages[index];
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e.target.classList.contains('lightbox-overlay') || e.target.classList.contains('lightbox-close')) {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function navLightbox(dir, e) {
+  e.stopPropagation();
+  currentLightboxIndex = (currentLightboxIndex + dir + galleryImages.length) % galleryImages.length;
+  const img = document.getElementById('lightboxImg');
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.9)';
+  setTimeout(() => {
+    img.src = galleryImages[currentLightboxIndex];
+    img.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  }, 150);
+}
+
+// keyboard nav for lightbox
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('lightbox').classList.contains('active')) {
+    if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    if (e.key === 'ArrowLeft') navLightbox(-1, e);
+    if (e.key === 'ArrowRight') navLightbox(1, e);
+  } else {
+    if (e.key === 'Escape') closeModal();
+  }
+});
 
 // ===== FORM =====
 function handleSubmit(e) {
@@ -1725,11 +2073,12 @@ function handleSubmit(e) {
 document.getElementById('tourModal').addEventListener('click', (e) => {
   if (e.target.classList.contains('modal-overlay')) closeModal();
 });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
 // ===== INIT =====
 createParticles();
 renderTours();
+initParallax();
+initCounters();
 </script>
 </body>
 </html>
