@@ -1559,8 +1559,19 @@ const i18n = {
 };
 
 // ===== TOUR CARD IMAGE MAPPINGS =====
-const chinaImages = ['assets/bus-scene.jpg', 'assets/china-ad.jpg', 'assets/food.jpg', 'assets/meeting.jpg'];
-const mongoliaImages = ['assets/hiking.jpg', 'assets/landscape.jpg', 'assets/ger-life.jpg'];
+const tourImages = {
+  1: 'assets/hero-bus.jpg',
+  2: 'assets/landscape.jpg',
+  3: 'assets/ger-wide.jpg',
+  4: 'assets/hiking.jpg',
+  5: 'assets/hero-bus.jpg',
+  6: 'assets/dairy.jpg',
+  7: 'assets/food.jpg',
+  8: 'assets/ger-decor.jpg',
+  9: 'assets/hiking.jpg',
+  10: 'assets/landscape.jpg',
+  11: 'assets/ger-life.jpg',
+};
 
 // ===== TOUR DATA =====
 const tours = [
@@ -1842,12 +1853,7 @@ function t(key) { return i18n[currentLang][key] || key; }
 
 // ===== TOUR RENDERING =====
 function getTourImage(tour) {
-  if (tour.cat === 'china') {
-    return chinaImages[(tour.id - 1) % chinaImages.length];
-  } else {
-    const mIdx = tours.filter(t => t.cat === 'mongolia').indexOf(tour);
-    return mongoliaImages[mIdx % mongoliaImages.length];
-  }
+  return tourImages[tour.id] || 'assets/landscape.jpg';
 }
 
 function renderTours() {
